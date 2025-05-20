@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { auth } from "./auth";
 
-const protectedRoutes = ["restaurants"];
+const protectedRoutes = ["/profile"];
 const apiAuthPrefix = "/api/auth";
-const authRoutes = ["/login", "signup"];
+const authRoutes = ["/signin", "/signup"];
 
 export default async function middleware(request: NextRequest) {
   const session = await auth();
@@ -25,11 +25,11 @@ export default async function middleware(request: NextRequest) {
   }
 
   const isProtected = protectedRoutes.some((route) =>
-    pathname.startsWith(route)
+    pathname.startsWith(route),
   );
 
   if (isProtected && !isLoggedIn) {
-    return NextResponse.redirect(new URL("/api/auth/signin", request.url));
+    return NextResponse.redirect(new URL("/signin", request.url));
   }
 
   return NextResponse.next();

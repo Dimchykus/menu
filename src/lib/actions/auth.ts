@@ -2,10 +2,37 @@
 
 import { signIn, signOut } from "../../auth";
 
-export const login = async () => {
-  await signIn("github", { redirect: "/restaurants" });
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+
+export const login = async (formData: FormData) => {
+  await signIn("credentials", formData);
+};
+
+export const signup = async (formData: FormData) => {
+  try {
+    const data = Object.fromEntries(formData.entries());
+
+    const body = { ...data, provider: "web" };
+
+    const response = await fetch(`${baseUrl}/api/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Signup failed: ${response.statusText}`);
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error("Signup error:", e);
+  }
 };
 
 export const logout = async () => {
-  await signOut({ redirect: "/login" });
+  await signOut({ redirectTo: "/signin" });
 };

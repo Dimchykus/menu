@@ -12,22 +12,40 @@ import {
 import { eq } from "drizzle-orm";
 
 export async function createUser(data: InsertUser) {
-  await db.insert(userTable).values(data);
+  await db.insert(userTable).values(data).returning();
 }
 
-export async function getUserById(
-  id: SelectUser["id"]
-): Promise<Array<SelectUser>> {
-  return db.select().from(userTable).where(eq(userTable.id, id));
+export async function signUp(data: InsertUser & InsertUserAuth) {
+  const user = await db.insert(userTable).values(data).returning();
+
+  const auth = await db
+    .insert(authTable)
+    .values({
+      login: data.email,
+      password: data.password,
+      userId: user[0].id,
+      provider: data.provider,
+    })
+    .returning();
+
+  return { ...user[0], ...auth[0] };
+}
+
+export async function getUserById(id: SelectUser["id"]): Promise<SelectUser> {
+  return db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.id, id))
+    .then((result) => result[0] || null);
 }
 
 export async function getUserAuthByLogin(
-  id: InsertUserAuth["login"]
+  login: InsertUserAuth["login"],
 ): Promise<SelectUserAuth | null> {
   return db
     .select()
     .from(authTable)
-    .where(eq(authTable.userId, id))
+    .where(eq(authTable.login, login))
     .limit(1)
     .then((result) => result[0] || null);
 }

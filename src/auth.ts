@@ -13,15 +13,25 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials, request) => {
+      authorize: async (credentials) => {
+        const baseUrl =
+          process.env.NEXT_PUBLIC_API_BASE_URL ||
+          "http://localhost:3000/api/signin";
+        const res: Response = await fetch(baseUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(credentials),
+        });
 
-
-
-        
+        const user = await res.json();
 
         return {
-
-        }
+          id: user.data.id,
+          email: user.data.email,
+          name: user.data.name,
+        };
       },
     }),
   ],

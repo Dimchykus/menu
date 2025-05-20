@@ -1,7 +1,7 @@
 import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
 export const userTable = pgTable("users", {
-  id: serial("id").primaryKey(), 
+  id: serial("id").primaryKey(),
   name: text("name").notNull(),
   age: integer("age"),
   email: text("email").notNull().unique(),
@@ -10,25 +10,16 @@ export const userTable = pgTable("users", {
 
 export const authTable = pgTable("auth", {
   id: serial("id").primaryKey(),
-  userId: text("user_id")
+  userId: integer("user_id")
     .notNull()
     .references(() => userTable.id),
   login: text("login").notNull().unique(),
-  passwordHash: text("password_hash").notNull(),
-  lastLoginAt: timestamp("last_login_at"),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const oauthAccountTable = pgTable("oauth_accounts", {
-  id: serial("id").primaryKey(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => userTable.id),
-  provider: text("provider").notNull(), // 'google', 'github'
-  providerAccountId: text("provider_account_id").notNull(),
+  provider: text("provider").notNull(),
   accessToken: text("access_token"),
   refreshToken: text("refresh_token"),
-  expiresAt: timestamp("expires_at"),
+  password: text("password_hash").notNull(),
+  lastLoginAt: timestamp("last_login_at"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const roleTable = pgTable("role_table", {
@@ -42,19 +33,19 @@ export const permissionTable = pgTable("permission_table", {
 });
 
 export const userRolesTable = pgTable("user_roles", {
-  userId: text("user_id")
+  userId: integer("user_id")
     .notNull()
     .references(() => userTable.id),
-  roleId: text("role_id")
+  roleId: integer("role_id")
     .notNull()
     .references(() => roleTable.roleId),
 });
 
 export const rolePermissionsTable = pgTable("role_permissions", {
-  roleId: text("role_id")
+  roleId: integer("role_id")
     .notNull()
     .references(() => roleTable.roleId),
-  permissionId: text("permission_id")
+  permissionId: integer("permission_id") 
     .notNull()
     .references(() => permissionTable.permissionId),
 });
