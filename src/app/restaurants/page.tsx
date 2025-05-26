@@ -1,15 +1,14 @@
 "use server";
 
-export default async function Page() {
-  // const baseUrl =
-  //   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000"; // Use environment variable or fallback
-  // await fetch(`${baseUrl}/api/users`, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({ name: "Test", email: "mail1@gmail.com", age: 18 }),
-  // });
+import Restaurants from "@/components/restaurants";
+import { getRestaurants } from "@/lib/db/actions/menu";
 
-  return <h1>Restaurants</h1>;
+export default async function Page() {
+  const restaurants = await getRestaurants();
+
+  if (!restaurants) {
+    return <div>Error loading restaurants</div>;
+  }
+
+  return <Restaurants restaurants={restaurants} />;
 }

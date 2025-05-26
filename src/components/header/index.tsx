@@ -10,15 +10,18 @@ import {
 import { logout } from "@/lib/actions/auth";
 import ThemeDropdownButton from "../switch-theme-button/drop-down-button";
 import Link from "next/link";
-import Arrow from "@/icons/arrow-down.svg";
 import Image from "next/image";
 import userSrc from "@/icons/user.jpeg";
+import { ChevronDown, LogOut } from "lucide-react";
 
 const Header = async () => {
   const session = await auth();
 
   return (
-    <header className="flex items-center p-6 bg-neutral-900">
+    <header className="flex items-center p-6 bg-neutral-100 border-b border-neutral-300 text-neutral-950">
+      <div>
+        <p className="font-bold text-2xl">MENU</p>
+      </div>
       <div className="ml-auto">
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center gap-2">
@@ -29,8 +32,8 @@ const Header = async () => {
               alt="user"
               className="rounded-[50%]"
             />
-            <p className="text-white">{session?.user?.name}</p>
-            <Arrow />
+            <p>{session?.user?.name}</p>
+            <ChevronDown />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>
@@ -38,7 +41,10 @@ const Header = async () => {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <ThemeDropdownButton />
-            <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
+              <LogOut />
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

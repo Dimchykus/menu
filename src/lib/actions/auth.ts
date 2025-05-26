@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn, signOut } from "../../auth";
+import { auth, signIn, signOut } from "../../auth";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
 
@@ -35,4 +35,14 @@ export const signup = async (formData: FormData) => {
 
 export const logout = async () => {
   await signOut({ redirectTo: "/signin" });
+};
+
+export const getUser = async () => {
+  const session = await auth();
+
+  if (!session?.user) {
+    throw new Error("Not logged in");
+  }
+
+  return session.user;
 };

@@ -1,8 +1,8 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import Icon from "@/icons/light-theme.svg";
 import { DropdownMenuItem } from "../ui/dropdown-menu";
+import { SunMoon } from "lucide-react";
 
 const ThemeDropdownButton = () => {
   const { setTheme, theme } = useTheme();
@@ -11,7 +11,7 @@ const ThemeDropdownButton = () => {
     <DropdownMenuItem
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
-      <Icon className="w-full h-full" /> Theme
+      <SunMoon className="w-full h-full" /> Theme
     </DropdownMenuItem>
   );
 };

@@ -1,19 +1,19 @@
 import Link from "next/link";
-import ProfileIcon from "@/icons/profile.svg";
+import { UserPen, HandPlatter, Soup } from "lucide-react";
 
 const Sidebar = () => {
   return (
-    <div className="p-4 bg-zinc-700 ">
-      <div className="flex flex-col gap-4 text-white">
+    <div className="p-10 bg-neutral-100 border-r border-neutral-300">
+      <div className="flex flex-col gap-4 text-neutral-950 font-medium">
         <Link href="/profile" className="flex items-center gap-2">
-          <ProfileIcon /> Profile
+          <UserPen /> Profile
         </Link>
         <Link href="/menu" className="flex items-center gap-2">
-          <ProfileIcon />
+          <Soup />
           Menu
         </Link>
         <Link href="/menu" className="flex items-center gap-2">
-          <ProfileIcon />
+          <HandPlatter />
           Restaurants
         </Link>
       </div>

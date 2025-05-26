@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/lib/providers/query";
 import { ThemeProvider } from "@/lib/providers/theme";
+import { ModalProvider } from "@/context/modals";
+import ModalContainer from "@/views/modals";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +33,7 @@ export default function RootLayout({
       className="min-h-[100%] flex flex-col"
     >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased grow-1 flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased grow-1 flex flex-col bg-neutral-50`}
       >
         <ThemeProvider
           attribute="class"
@@ -39,7 +41,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <ReactQueryProvider>
+            <ModalProvider>
+              {children}
+              <ModalContainer />
+            </ModalProvider>
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>

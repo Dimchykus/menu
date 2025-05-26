@@ -3,7 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    remotePatterns: [],
+    remotePatterns: [
+      {
+        hostname: "www.lakelawnresort.com",
+      },
+    ],
   },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule: any) =>
