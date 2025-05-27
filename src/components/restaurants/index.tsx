@@ -13,7 +13,7 @@ const Restaurants: React.FC<Props> = ({ restaurants }) => {
       {restaurants.map((restaurant) => (
         <Link
           key={restaurant.id}
-          href={`/restaurants/${restaurant.id}`}
+          href={`/restaurant/${restaurant.id}`}
           className="p-4 mb-4 bg-white rounded shadow hover:bg-gray-50 flex items-center gap-4 transition-colors duration-200"
         >
           <Image

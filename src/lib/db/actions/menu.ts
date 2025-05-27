@@ -12,7 +12,7 @@ import {
   restaurantTable,
 } from "../schema/menu";
 import { getUser } from "@/lib/actions/auth";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 export const createMenu = async (menu: InsertMenu) => {
   await db.insert(menuTable).values(menu).returning();
@@ -49,6 +49,30 @@ export const getRestaurants = async () => {
     }
 
     return restaurants;
+  } catch (e) {
+    console.log(e);
+
+    return null;
+  }
+};
+
+export const getRestaurantById = async (id: string | number) => {
+  try {
+    const user = await getUser();
+
+    const restaurantId = typeof id === "string" ? parseInt(id) : id;
+
+    const restaurant = await db
+      .select()
+      .from(restaurantTable)
+      .where(
+        and(
+          eq(restaurantTable.userId, user.userId),
+          eq(restaurantTable.id, restaurantId),
+        ),
+      );
+
+    return restaurant[0] || null;
   } catch (e) {
     console.log(e);
 
