@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const { auth, handlers, signIn, signOut } = NextAuth({
+export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
   providers: [
     GitHub({
       clientId: process.env.AUTH_GITHUB_ID || "",
@@ -36,9 +36,16 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, trigger, session }) => {
       if (user) {
         token.user = user;
+      }
+
+      if (trigger === "update") {
+        token.user = {
+          ...token.user,
+          name: session.user.name,
+        };
       }
 
       return token;

@@ -1,12 +1,6 @@
 import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
-
-export const userTable = pgTable("users", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  age: integer("age"),
-  email: text("email").notNull().unique(),
-  createdAt: timestamp("created_at").defaultNow(),
-});
+import { relations } from "drizzle-orm/relations";
+import { restaurantTable } from "./menu";
 
 export const authTable = pgTable("auth", {
   id: serial("id").primaryKey(),
@@ -21,6 +15,13 @@ export const authTable = pgTable("auth", {
   lastLoginAt: timestamp("last_login_at"),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+export const authTableRelations = relations(authTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [authTable.userId],
+    references: [userTable.id],
+  }),
+}));
 
 export const roleTable = pgTable("role_table", {
   roleId: serial("role_id").primaryKey(),
@@ -45,10 +46,23 @@ export const rolePermissionsTable = pgTable("role_permissions", {
   roleId: integer("role_id")
     .notNull()
     .references(() => roleTable.roleId),
-  permissionId: integer("permission_id") 
+  permissionId: integer("permission_id")
     .notNull()
     .references(() => permissionTable.permissionId),
 });
+
+export const userTable = pgTable("users", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  age: integer("age"),
+  email: text("email").notNull().unique(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const userTableRelations = relations(userTable, ({ many }) => ({
+  auth: many(authTable),
+  restaurants: many(restaurantTable),
+}));
 
 export type InsertUser = typeof userTable.$inferInsert;
 export type SelectUser = typeof userTable.$inferSelect;

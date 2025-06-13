@@ -5,6 +5,7 @@ import ReactQueryProvider from "@/lib/providers/query";
 import { ThemeProvider } from "@/lib/providers/theme";
 import { ModalProvider } from "@/context/modals";
 import ModalContainer from "@/views/modals";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({
             <ModalProvider>
               {children}
               <ModalContainer />
+              <Toaster />
             </ModalProvider>
           </ReactQueryProvider>
         </ThemeProvider>

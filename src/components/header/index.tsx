@@ -20,7 +20,9 @@ const Header = async () => {
   return (
     <header className="flex items-center p-6 bg-neutral-100 border-b border-neutral-300 text-neutral-950">
       <div>
-        <p className="font-bold text-2xl">MENU</p>
+        <Link href="/" className="font-bold text-2xl">
+          MenuMaker
+        </Link>
       </div>
       <div className="ml-auto">
         <DropdownMenu>

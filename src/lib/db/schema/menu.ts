@@ -1,5 +1,14 @@
-import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  integer,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  unique,
+} from "drizzle-orm/pg-core";
 import { userTable } from "./user";
+import { relations } from "drizzle-orm/relations";
 
 export const restaurantTable = pgTable("restaurants", {
   id: serial("id").primaryKey(),
@@ -12,6 +21,16 @@ export const restaurantTable = pgTable("restaurants", {
   phone: text("phone"),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+export const restaurantTableRelations = relations(
+  restaurantTable,
+  ({ one }) => ({
+    user: one(userTable, {
+      fields: [restaurantTable.userId],
+      references: [userTable.id],
+    }),
+  }),
+);
 
 export const menuTable = pgTable("menus", {
   id: serial("id").primaryKey(),
@@ -49,10 +68,43 @@ export type NewRestaurant = Omit<typeof restaurantTable.$inferInsert, "userId">;
 export type Restaurant = typeof restaurantTable.$inferSelect;
 
 export type InsertMenu = typeof menuTable.$inferInsert;
-export type SelectMenu = typeof menuTable.$inferSelect;
+export type Menu = typeof menuTable.$inferSelect;
 
 export type InsertMenuCategory = typeof menuCategoryTable.$inferInsert;
 export type SelectMenuCategory = typeof menuCategoryTable.$inferSelect;
 
 export type InsertDish = typeof dishTable.$inferInsert;
 export type SelectDish = typeof dishTable.$inferSelect;
+
+export const scheduleTable = pgTable(
+  "schedule",
+  {
+    id: serial("id").primaryKey(),
+    restaurantId: integer("restaurant_id")
+      .notNull()
+      .references(() => restaurantTable.id, { onDelete: "cascade" }),
+    dayOfWeek: text("day_of_week", {
+      enum: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+    }).notNull(),
+    open: text("opening_time").notNull(),
+    close: text("closing_time").notNull(),
+    isClosed: boolean("is_closed").default(false),
+  },
+  (table) => ({
+    uniqueRestaurantDay: unique("unique_restaurant_day").on(
+      table.restaurantId,
+      table.dayOfWeek,
+    ),
+  }),
+);
+
+export type InsertSchedule = typeof scheduleTable.$inferInsert;
+export type SelectSchedule = typeof scheduleTable.$inferSelect;

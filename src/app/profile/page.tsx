@@ -1,17 +1,15 @@
-"use client";
-
-import { useModal } from "@/hooks/modals";
+import MenuEditor from "@/components/menu-editor";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+const ProfileUserInfo = dynamic(() => import("@/components/profile-user-info"));
 
 export default function Page() {
-  const { openModal } = useModal();
-
   return (
     <div>
-      <button
-        onClick={() => {
-          openModal("restaurantForm", true);
-        }}
-      >Open popup</button>
+      <ProfileUserInfo />
+      <Suspense fallback={<div>Loading...</div>}>
+        <MenuEditor />
+      </Suspense>
     </div>
   );
 }

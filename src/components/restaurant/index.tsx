@@ -1,11 +1,56 @@
-import { type Restaurant as RestaurantI } from "@/lib/db/schema/menu";
+import { auth } from "@/auth";
+import {
+  SelectSchedule,
+  type Restaurant as RestaurantI,
+} from "@/lib/db/schema/menu";
 import Image from "next/image";
+import EditScheduleBtn from "./edit-schedule-btn";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { capitalizeFirstLetter } from "@/utils/text";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import EditRestaurantBtn from "./edit-restaurant-btn";
 
 interface Props {
   restaurant: RestaurantI;
+  schedule: SelectSchedule[];
 }
 
-const Restaurant: React.FC<Props> = ({ restaurant }) => {
+const isCurrentlyOpen = (
+  schedule: SelectSchedule[],
+  currentDay: string,
+): boolean => {
+  const currentSchedule = schedule.find(
+    (s) => s.dayOfWeek.toLowerCase() === currentDay,
+  );
+
+  if (!currentSchedule) return false;
+
+  const now = new Date();
+  const currentTime = now.getHours() * 100 + now.getMinutes();
+
+  const [openHour, openMinute] = currentSchedule.open.split(":").map(Number);
+  const [closeHour, closeMinute] = currentSchedule.close.split(":").map(Number);
+
+  const openTime = openHour * 100 + openMinute;
+  const closeTime = closeHour * 100 + closeMinute;
+
+  return currentTime >= openTime && currentTime <= closeTime;
+};
+
+const Restaurant: React.FC<Props> = async ({ restaurant, schedule }) => {
+  const session = await auth();
+  const today = new Date()
+    .toLocaleString("en-US", { weekday: "long" })
+    .toLowerCase();
+
+  const isOpen = isCurrentlyOpen(schedule, today);
+
   return (
     <div className="p-6 max-w-md mx-auto bg-white rounded shadow">
       <Image
@@ -18,10 +63,69 @@ const Restaurant: React.FC<Props> = ({ restaurant }) => {
         className="h-32 object-cover rounded mb-2"
       />
       <div>
-        <h1 className="text-2xl font-bold mb-4">{restaurant.name}</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-bold">{restaurant.name}</h1>
+          <div
+            className={`px-3 py-1 rounded-full text-sm font-medium ${
+              isOpen ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+            }`}
+          >
+            {isOpen ? "Open" : "Closed"}
+          </div>
+        </div>
         <p className="text-gray-600 mb-4">{restaurant.description}</p>
         <p className="text-gray-800">Address: {restaurant.address}</p>
         <p className="text-gray-800">Phone: {restaurant.phone}</p>
+        {schedule.length > 0 && (
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1">
+              <AccordionTrigger className="hover:no-underline cursor-pointer">
+                Schedule
+              </AccordionTrigger>
+              <AccordionContent className="flex flex-col gap-1 text-balance">
+                {schedule.map((schedule) => {
+                  const isToday = schedule.dayOfWeek.toLowerCase() === today;
+                  return (
+                    <div
+                      key={schedule.id}
+                      className={`flex items-center justify-between p-2 rounded-sm transition-colors ${
+                        isToday
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-secondary/50"
+                      }`}
+                    >
+                      <p className="font-medium text-sm">
+                        {capitalizeFirstLetter(schedule.dayOfWeek)}
+                      </p>
+                      <div className="flex items-center gap-2 w-[150px] justify-center">
+                        <p
+                          className={`text-sm ${
+                            isToday
+                              ? "text-primary-foreground"
+                              : "text-muted-foreground"
+                          }`}
+                        >
+                          {schedule.open} - {schedule.close}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        )}
+        <div className="flex gap-1">
+          {session?.user?.userId && (
+            <>
+              <EditScheduleBtn id={restaurant.id} />
+              <EditRestaurantBtn id={restaurant.id} />
+            </>
+          )}
+        </div>
+        <Button className="w-full mt-2" asChild>
+          <Link href={`/restaurant/${restaurant.id}/menu`}>Open menu</Link>
+        </Button>
       </div>
     </div>
   );

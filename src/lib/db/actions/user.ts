@@ -49,3 +49,8 @@ export async function getUserAuthByLogin(
     .limit(1)
     .then((result) => result[0] || null);
 }
+
+export const updateUserInfo = async (userData: InsertUser & { id: number }) => {
+
+  await db.update(userTable).set(userData).where(eq(userTable.id, userData.id));
+};

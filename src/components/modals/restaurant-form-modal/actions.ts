@@ -1,6 +1,7 @@
 "use server";
 
-import { createRestaurant } from "@/lib/db/actions/menu";
+import { createRestaurant, updateRestaurant } from "@/lib/db/actions/menu";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 export const handleCreateRestaurant = async (
@@ -10,11 +11,13 @@ export const handleCreateRestaurant = async (
   const restaurantSchema = z.object({
     name: z.string().min(1, "Name is required"),
     description: z.string().min(1, "Description is required"),
+    id: z.string().optional(),
   });
 
   const raw = {
     name: formData.get("name")?.toString() || "",
     description: formData.get("description")?.toString() || "",
+    id: formData.get("id")?.toString(),
   };
 
   const parsed = restaurantSchema.safeParse(raw);
@@ -28,11 +31,17 @@ export const handleCreateRestaurant = async (
     };
   }
 
-  const restaurant = await createRestaurant(raw);
+  const { id, ...data } = parsed.data;
+
+  const restaurant = id
+    ? await updateRestaurant(parseInt(id), data)
+    : await createRestaurant(data);
+
+  revalidatePath(`/restaurant/${id}`);
 
   if (!restaurant) {
     return {
-      error: "Failed to create restaurant",
+      error: "Failed to save restaurant",
       restaurant: null,
       success: false,
     };

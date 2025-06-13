@@ -1,4 +1,4 @@
-import Header from "@/components/header";
+import Header from "@/components/header/index";
 import Sidebar from "@/components/sidebar";
 
 export default function Layout({
@@ -11,7 +11,7 @@ export default function Layout({
       <Header />
       <div className="flex flex-1">
         <Sidebar />
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 p-6">{children}</div>
       </div>
     </div>
   );

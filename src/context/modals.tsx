@@ -3,7 +3,14 @@
 import { createContext, useState, ReactNode } from "react";
 
 export interface ModalPropsMap {
-  restaurantForm: boolean | null;
+  restaurantForm?: { id?: number };
+  menuForm?: { id?: number; restaurantId?: number };
+  scheduleForm?: { id: number };
+  categoryForm?: {
+    id?: number;
+    menuId?: number;
+    category?: { name: string; description: string | null };
+  };
 }
 
 type ModalKey = keyof ModalPropsMap;
@@ -21,9 +28,7 @@ export const ModalContext = createContext<ModalContextType | undefined>(
   undefined,
 );
 
-const initialModalState: ModalPropsMap = {
-  restaurantForm: null,
-};
+const initialModalState: ModalPropsMap = {};
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [modals, setModals] = useState<ModalPropsMap>(initialModalState);
