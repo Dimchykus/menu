@@ -15,23 +15,23 @@ import {
 } from "@/components/ui/dialog";
 import { useModal } from "@/lib/hooks/use-modals";
 import { X } from "lucide-react";
-import { getMenuById } from "@/lib/db/actions/menu";
-import { Menu } from "@/lib/db/schema/menu";
+import { getCategoryById } from "@/lib/db/actions/menu";
+import { Category } from "@/lib/db/schema/menu";
 import useFormAction from "@/lib/hooks/use-form-action";
 
-const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
+const CategoryFormModal: React.FC<ModalPropsMap["categoryForm"]> = (props) => {
   const { closeModal } = useModal();
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const methods = useFormAction<MenuFormState>({
     extraParams: {
-      restaurantId: props?.restaurantId?.toString() || "",
+      menuId: props?.menuId?.toString() || "",
       id: props?.id?.toString() || "",
     },
     onAction: handleCreateMenu,
     onSuccess: () => {
-      closeModal("menuForm");
+      closeModal("categoryForm");
     },
   });
 
@@ -39,11 +39,11 @@ const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
 
   useEffect(() => {
     if (props?.id) {
-      getMenuById(props.id).then((menu: Menu | null) => {
-        if (menu) {
+      getCategoryById(props.id).then((category: Category | null) => {
+        if (category) {
           reset({
-            name: menu.name,
-            description: menu.description || "",
+            name: category.name,
+            description: category.description || "",
           });
         }
       });
@@ -64,11 +64,11 @@ const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
           <DialogTitle>
             {typeof props !== "boolean" && props?.id ? "Edit" : "Create"} menu
           </DialogTitle>
-          <DialogDescription>Enter menu information</DialogDescription>
+          <DialogDescription>Enter category information</DialogDescription>
           <DialogClose
             asChild
             onClick={() => {
-              closeModal("menuForm");
+              closeModal("categoryForm");
             }}
           >
             <Button className="absolute right-4 top-4 size-6 p-0">
@@ -97,4 +97,4 @@ const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
   );
 };
 
-export default MenuFormModal;
+export default CategoryFormModal;

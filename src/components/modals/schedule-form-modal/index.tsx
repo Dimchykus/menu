@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { useModal } from "@/hooks/modals";
+import { useModal } from "@/lib/hooks/use-modals";
 import { X } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";

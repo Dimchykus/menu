@@ -70,11 +70,11 @@ export type Restaurant = typeof restaurantTable.$inferSelect;
 export type InsertMenu = typeof menuTable.$inferInsert;
 export type Menu = typeof menuTable.$inferSelect;
 
-export type InsertMenuCategory = typeof menuCategoryTable.$inferInsert;
-export type SelectMenuCategory = typeof menuCategoryTable.$inferSelect;
+export type InsertCategory = typeof menuCategoryTable.$inferInsert;
+export type Category = typeof menuCategoryTable.$inferSelect;
 
 export type InsertDish = typeof dishTable.$inferInsert;
-export type SelectDish = typeof dishTable.$inferSelect;
+export type Dish = typeof dishTable.$inferSelect;
 
 export const scheduleTable = pgTable(
   "schedule",

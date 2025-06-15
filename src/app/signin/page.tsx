@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import AuthHeader from "@/components/auth-header";
 import SigninForm from "@/components/forms/signin-form";
-// import { getServerSession } from "next-auth";
 
 export default async function Page() {
   const session = await auth();

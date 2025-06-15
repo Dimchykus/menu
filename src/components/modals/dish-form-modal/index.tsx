@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { FormProvider } from "react-hook-form";
-import { handleCreateMenu, MenuFormState } from "./actions";
+import { handleCreateMenu } from "./actions";
 import FormInput from "@/components/form-input";
 import { Button } from "@/components/ui/button";
 import { ModalPropsMap } from "@/context/modals";
@@ -15,35 +15,51 @@ import {
 } from "@/components/ui/dialog";
 import { useModal } from "@/lib/hooks/use-modals";
 import { X } from "lucide-react";
-import { getMenuById } from "@/lib/db/actions/menu";
-import { Menu } from "@/lib/db/schema/menu";
+import { getDishById } from "@/lib/db/actions/menu";
+import { Dish } from "@/lib/db/schema/menu";
 import useFormAction from "@/lib/hooks/use-form-action";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
+const menuSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  description: z.string().min(1, "Description is required"),
+  price: z.coerce.number().min(0, "Min price is 0"),
+});
+
+export type MenuFormState = z.infer<typeof menuSchema>;
+
+const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
   const { closeModal } = useModal();
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const methods = useFormAction<MenuFormState>({
     extraParams: {
-      restaurantId: props?.restaurantId?.toString() || "",
+      categoryId: props?.categoryId?.toString() || "",
       id: props?.id?.toString() || "",
+      oldImage: props?.data?.image || "",
     },
+    resolver: zodResolver(menuSchema),
     onAction: handleCreateMenu,
     onSuccess: () => {
-      closeModal("menuForm");
+      closeModal("dishForm");
     },
   });
 
-  const { reset } = methods;
+  const {
+    reset,
+    formState: { errors },
+    watch,
+  } = methods;
 
   useEffect(() => {
     if (props?.id) {
-      getMenuById(props.id).then((menu: Menu | null) => {
-        if (menu) {
+      getDishById(props.id).then((dish: Dish | null) => {
+        if (dish) {
           reset({
-            name: menu.name,
-            description: menu.description || "",
+            name: dish.name,
+            description: dish.description || "",
           });
         }
       });
@@ -57,6 +73,8 @@ const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
     };
   }, []);
 
+  const [name, description, price] = watch(["name", "description", "price"]);
+
   return (
     <Dialog open>
       <DialogContent className="sm:max-w-[425px] [&>button:first-of-type]:hidden">
@@ -64,11 +82,11 @@ const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
           <DialogTitle>
             {typeof props !== "boolean" && props?.id ? "Edit" : "Create"} menu
           </DialogTitle>
-          <DialogDescription>Enter menu information</DialogDescription>
+          <DialogDescription>Enter dish information</DialogDescription>
           <DialogClose
             asChild
             onClick={() => {
-              closeModal("menuForm");
+              closeModal("dishForm");
             }}
           >
             <Button className="absolute right-4 top-4 size-6 p-0">
@@ -83,8 +101,29 @@ const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
             className="grid gap-4"
             action={methods.handleAction}
           >
-            <FormInput name="name" title="Name" />
-            <FormInput name="description" title="Description" />
+            <FormInput name="name" title="Name" value={name} />
+            <FormInput
+              name="description"
+              title="Description"
+              value={description}
+            />
+            <FormInput name="price" type="number" title="Price" value={price} />
+            <FormInput
+              name="image"
+              type="file"
+              title="Image"
+              accept="image/png, image/gif, image/jpeg"
+            />
+            {Object.keys(errors || {}).length > 0 && (
+              <div className="text-red-500 text-sm space-y-1">
+                {Object.entries(errors || {}).map(([field, error]) => (
+                  <p key={field}>
+                    {field.charAt(0).toUpperCase() + field.slice(1)}:{" "}
+                    {error.message}
+                  </p>
+                ))}
+              </div>
+            )}
             <DialogFooter>
               <Button type="submit">
                 {typeof props !== "boolean" && props?.id ? "Update" : "Create"}
@@ -97,4 +136,4 @@ const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
   );
 };
 
-export default MenuFormModal;
+export default DishFormModal;

@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "www.lakelawnresort.com",
       },
+      {
+        hostname: "linkstagram-s3.s3.eu-central-1.amazonaws.com",
+      },
     ],
   },
   webpack(config) {

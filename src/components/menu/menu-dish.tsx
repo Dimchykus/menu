@@ -1,7 +1,8 @@
-import { SelectDish } from "@/lib/db/schema/menu";
+import { Dish } from "@/lib/db/schema/menu";
+import Image from "next/image";
 
 interface Props {
-  dish: SelectDish;
+  dish: Dish;
 }
 
 const MenuDish = ({ dish }: Props) => {
@@ -9,13 +10,15 @@ const MenuDish = ({ dish }: Props) => {
     <div className="group relative overflow-hidden rounded-lg bg-white p-4 shadow-md transition-all hover:shadow-lg">
       {/* {dish.image && ( */}
       <div className="relative mb-3 h-48 w-full overflow-hidden rounded-lg">
-        <img
-          // src={dish.image}
+        <Image
           src={
+            dish.image ||
             "https://www.lakelawnresort.com/wp-content/uploads/2016/05/LakeLawnResort_1878bar-1900x855-c-default.jpg"
           }
           alt={dish.name}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+          width={300}
+          height={192}
         />
       </div>
       {/* )} */}

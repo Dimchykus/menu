@@ -18,6 +18,7 @@ export const EditButton = ({
 }: EditButtonProps) => {
   return (
     <Button
+      asChild
       variant="ghost"
       size={size}
       className={className}
@@ -28,12 +29,16 @@ export const EditButton = ({
       }}
       title={children || "Edit"}
     >
-      {isDelete ? (
-        <Trash className="h-4 w-4" />
-      ) : (
-        <Pencil className="h-4 w-4" />
-      )}
-      {size !== "icon" && children && <span className="ml-2">{children}</span>}
+      <span className="flex items-center">
+        {isDelete ? (
+          <Trash className="h-4 w-4" />
+        ) : (
+          <Pencil className="h-4 w-4" />
+        )}
+        {size !== "icon" && children && (
+          <span className="ml-2">{children}</span>
+        )}
+      </span>
     </Button>
   );
 };

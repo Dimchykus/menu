@@ -1,16 +1,14 @@
 "use client";
 
+import { Dish } from "@/lib/db/schema/menu";
 import { createContext, useState, ReactNode } from "react";
 
 export interface ModalPropsMap {
   restaurantForm?: { id?: number };
   menuForm?: { id?: number; restaurantId?: number };
+  categoryForm?: { id?: number; menuId?: number };
+  dishForm?: { id?: number; categoryId?: number; data?: Dish };
   scheduleForm?: { id: number };
-  categoryForm?: {
-    id?: number;
-    menuId?: number;
-    category?: { name: string; description: string | null };
-  };
 }
 
 type ModalKey = keyof ModalPropsMap;

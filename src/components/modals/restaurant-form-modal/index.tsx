@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useModal } from "@/hooks/modals";
+import { useModal } from "@/lib/hooks/use-modals";
 import { X } from "lucide-react";
 import { useActionState, useEffect, useState } from "react";
 import Form from "next/form";

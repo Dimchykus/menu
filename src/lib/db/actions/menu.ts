@@ -5,7 +5,7 @@ import {
   dishTable,
   InsertDish,
   InsertMenu,
-  InsertMenuCategory,
+  InsertCategory,
   NewRestaurant,
   menuCategoryTable,
   menuTable,
@@ -14,9 +14,12 @@ import {
   scheduleTable,
   InsertSchedule,
   Menu,
+  Category,
+  Dish,
 } from "../schema/menu";
 import { getUser } from "@/lib/actions/auth";
 import { eq, and, sql, getTableColumns } from "drizzle-orm";
+import { getImage } from "@/lib/actions/images";
 
 export const createRestaurant = async (data: NewRestaurant) => {
   try {
@@ -91,7 +94,7 @@ export const getRestaurantById = async (id: string | number) => {
   }
 };
 
-export const createMenuCategory = async (menuCategory: InsertMenuCategory) => {
+export const createCategory = async (menuCategory: InsertCategory) => {
   await db.insert(menuCategoryTable).values(menuCategory).returning();
 };
 
@@ -197,10 +200,29 @@ export const getRestaurantMenuById = async (
   return query;
 };
 
-export const getCategoryDishes = async (id: MenuCategory["id"]) => {
-  const query = db.select().from(dishTable).where(eq(dishTable.categoryId, id));
+const getDishImages = async (dishes: Dish[]) => {
+  const dishesWithImages = await Promise.all(
+    dishes.map(async (dish) => {
+      const image = dish.image ? await getImage(dish.image) : null;
+      return {
+        ...dish,
+        image,
+      };
+    }),
+  );
 
-  return query;
+  return dishesWithImages;
+};
+
+export const getCategoryDishes = async (id: MenuCategory["id"]) => {
+  const dishes = await db
+    .select()
+    .from(dishTable)
+    .where(eq(dishTable.categoryId, id));
+
+  const res = await getDishImages(dishes);
+
+  return res;
 };
 
 export const getUserEditRestaurants = async () => {
@@ -264,7 +286,9 @@ export const getUserEditDishes = async (categoryId: MenuCategory["id"]) => {
     .from(dishTable)
     .where(eq(dishTable.categoryId, categoryId));
 
-  return dishes;
+  const res = await getDishImages(dishes);
+
+  return res;
 };
 
 export type UserEditDishes = Awaited<ReturnType<typeof getUserEditDishes>>;
@@ -281,4 +305,119 @@ export const createMenu = async (menu: InsertMenu) => {
 
 export const deleteMenu = async (id: Menu["id"]) => {
   await db.delete(menuTable).where(eq(menuTable.id, id));
+};
+
+export const deleteCategory = async (id: Category["id"]) => {
+  await db.delete(menuCategoryTable).where(eq(menuCategoryTable.id, id));
+};
+
+export const deleteDish = async (id: Dish["id"]) => {
+  await db.delete(dishTable).where(eq(dishTable.id, id));
+};
+
+export const updateMenu = async (id: number, data: InsertMenu) => {
+  try {
+    await getUser();
+
+    const menu = await db
+      .update(menuTable)
+      .set(data)
+      .where(and(eq(menuTable.id, id)))
+      .returning();
+
+    return menu[0];
+  } catch (e) {
+    console.log(e);
+
+    return null;
+  }
+};
+
+export const getMenuById = async (id: Menu["id"]) => {
+  try {
+    const menuId = typeof id === "string" ? parseInt(id) : id;
+
+    const menu = await db
+      .select()
+      .from(menuTable)
+      .where(and(eq(menuTable.id, menuId)));
+
+    return menu[0] || null;
+  } catch (e) {
+    console.log(e);
+
+    return null;
+  }
+};
+
+export const updateCategory = async (id: number, data: InsertCategory) => {
+  try {
+    await getUser();
+
+    const categories = await db
+      .update(menuCategoryTable)
+      .set(data)
+      .where(and(eq(menuCategoryTable.id, id)))
+      .returning();
+
+    return categories[0];
+  } catch (e) {
+    console.log(e);
+
+    return null;
+  }
+};
+
+export const getCategoryById = async (id: Category["id"]) => {
+  try {
+    const categoryId = typeof id === "string" ? parseInt(id) : id;
+
+    const menu = await db
+      .select()
+      .from(menuCategoryTable)
+      .where(and(eq(menuCategoryTable.id, categoryId)));
+
+    return menu[0] || null;
+  } catch (e) {
+    console.log(e);
+
+    return null;
+  }
+};
+
+export const updateDish = async (id: number, data: InsertDish) => {
+  try {
+    await getUser();
+
+    const dishes = await db
+      .update(dishTable)
+      .set(data)
+      .where(and(eq(dishTable.id, id)))
+      .returning();
+
+    console.log("data", data);
+
+    return dishes[0];
+  } catch (e) {
+    console.log(e);
+
+    return null;
+  }
+};
+
+export const getDishById = async (id: Dish["id"]) => {
+  try {
+    const dishId = typeof id === "string" ? parseInt(id) : id;
+
+    const dish = await db
+      .select()
+      .from(dishTable)
+      .where(and(eq(dishTable.id, dishId)));
+
+    return dish[0] || null;
+  } catch (e) {
+    console.log(e);
+
+    return null;
+  }
 };

@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 
 interface Props {
-  restaurantId: number;
+  menuId: number;
 }
 
-const AddMenuButton = ({ restaurantId }: Props) => {
+const AddCategoryButton = ({ menuId }: Props) => {
   const { openModal } = useModal();
 
   return (
@@ -16,13 +16,13 @@ const AddMenuButton = ({ restaurantId }: Props) => {
       size="sm"
       className="gap-2"
       onClick={() => {
-        openModal("menuForm", { restaurantId });
+        openModal("categoryForm", { menuId });
       }}
     >
       <PlusCircle className="w-4 h-4" />
-      Add Menu
+      Add Category
     </Button>
   );
 };
 
-export default AddMenuButton;
+export default AddCategoryButton;

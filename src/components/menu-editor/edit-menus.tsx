@@ -5,13 +5,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 import EditCategories from "./edit-category";
 import { Suspense } from "react";
 import Link from "next/link";
 import AddMenuButton from "./components/new-menu-button";
 import DeleteMenuButton from "./components/delete-menu-button";
+import EditMenuButton from "./components/edit-menu-button";
 
 interface Props {
   restaurantId: number;
@@ -26,7 +26,7 @@ const EditMenus = async ({ restaurantId }: Props) => {
         <h3 className="text-lg font-semibold">Menus</h3>
         <AddMenuButton restaurantId={restaurantId} />
       </div>
-      <Accordion type="multiple" className="space-y-4">
+      <Accordion type="single" className="space-y-4">
         {menus?.map((menu) => (
           <AccordionItem
             key={menu.id}
@@ -38,17 +38,16 @@ const EditMenus = async ({ restaurantId }: Props) => {
                 <div>
                   <div className="flex items-center gap-2">
                     <h4 className="text-base font-medium">{menu.name}</h4>
+                    <EditMenuButton id={menu.id} restaurantId={restaurantId} />
                     <Link href={`/restaurant/${restaurantId}/menu/${menu.id}`}>
-                      <Button variant="ghost" title={"Preview Menu"}>
-                        <Eye className="h-4 w-4" />
-                      </Button>
+                      <Eye className="h-4 w-4" />
                     </Link>
                     <DeleteMenuButton id={menu.id} />
                   </div>
                   {menu.description && (
-                    <p className="text-sm text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       {menu.description}
-                    </p>
+                    </span>
                   )}
                 </div>
                 <div className="flex items-center gap-2">
@@ -61,7 +60,10 @@ const EditMenus = async ({ restaurantId }: Props) => {
             <AccordionContent>
               <div className="pt-4 pb-6">
                 <Suspense fallback={<div>Loading...</div>}>
-                  <EditCategories menuId={menu.id} />
+                  <EditCategories
+                    restaurantId={restaurantId}
+                    menuId={menu.id}
+                  />
                 </Suspense>
               </div>
             </AccordionContent>

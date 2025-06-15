@@ -10,14 +10,13 @@ import EditRestaurantButton from "./components/edit-restautant-button";
 import AddRestaurantButton from "./components/new-restautant-button";
 import DeleteRestaurantButton from "./components/delete-restautant-button";
 import { Eye } from "lucide-react";
-import { Button } from "../ui/button";
 import Link from "next/link";
 
 const EditRestaurants = async () => {
   const restaurants = await getUserEditRestaurants();
 
   return (
-    <Accordion type="multiple" className="space-y-4">
+    <Accordion type="single" className="space-y-4">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold">Restaurants</h3>
         <AddRestaurantButton />
@@ -35,16 +34,14 @@ const EditRestaurants = async () => {
                   <h4 className="text-base font-medium">{restaurant.name}</h4>
                   <EditRestaurantButton id={restaurant.id} />
                   <Link href={`/restaurant/${restaurant.id}`}>
-                    <Button variant="ghost" title={"Preview Menu"}>
-                      <Eye className="h-4 w-4" />
-                    </Button>
+                    <Eye className="h-4 w-4 p-0" />
                   </Link>
                   <DeleteRestaurantButton id={restaurant.id} />
                 </div>
                 {restaurant.description && (
-                  <p className="text-sm text-muted-foreground">
+                  <span className="text-sm text-muted-foreground">
                     {restaurant.description}
-                  </p>
+                  </span>
                 )}
               </div>
               <div className="flex items-center gap-2">

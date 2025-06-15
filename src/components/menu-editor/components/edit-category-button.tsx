@@ -5,18 +5,19 @@ import { EditButton } from "./action-button";
 
 interface Props {
   id: number;
+  menuId: number;
 }
 
-const EditRestaurantButton = ({ id }: Props) => {
+const EditCategoryButton = ({ id, menuId }: Props) => {
   const { openModal } = useModal();
 
   return (
     <EditButton
       onClick={() => {
-        openModal("restaurantForm", { id });
+        openModal("categoryForm", { id, menuId });
       }}
     />
   );
 };
 
-export default EditRestaurantButton;
+export default EditCategoryButton;

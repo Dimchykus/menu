@@ -5,28 +5,29 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import EditDishes from "./edit-dish";
-import { Button } from "../ui/button";
-import { PlusCircle } from "lucide-react";
+import { Eye } from "lucide-react";
 import { getUserEditCategories } from "@/lib/db/actions/menu";
 import { Suspense } from "react";
+import Link from "next/link";
+import EditCategoryButton from "./components/edit-category-button";
+import AddCategoryButton from "./components/new-category-button";
+import DeleteCategoryButton from "./components/delete-category-button";
 
 interface Props {
   menuId: number;
+  restaurantId: number;
 }
 
-const EditCategories = async ({ menuId }: Props) => {
+const EditCategories = async ({ restaurantId, menuId }: Props) => {
   const categories = await getUserEditCategories(menuId);
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">Categories</h3>
-        <Button size="sm" className="gap-2">
-          <PlusCircle className="w-4 h-4" />
-          Add Category
-        </Button>
+        <AddCategoryButton menuId={menuId} />
       </div>
-      <Accordion type="multiple" className="space-y-4">
+      <Accordion type="single" className="space-y-4">
         {categories?.map((category) => (
           <AccordionItem
             key={category.id}
@@ -36,11 +37,22 @@ const EditCategories = async ({ menuId }: Props) => {
             <AccordionTrigger className="hover:no-underline">
               <div className="flex flex-1 items-center justify-between pr-4">
                 <div>
-                  <h4 className="text-base font-medium">{category.name}</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="text-base font-medium">
+                      {category.name}
+                    </span>
+                    <EditCategoryButton id={category.id} menuId={menuId} />
+                    <Link
+                      href={`/restaurant/${restaurantId}/menu/${menuId}#${category.id}`}
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Link>
+                    <DeleteCategoryButton id={menuId} />
+                  </div>
                   {category.description && (
-                    <p className="text-sm text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       {category.description}
-                    </p>
+                    </span>
                   )}
                 </div>
                 <div className="flex items-center gap-2">

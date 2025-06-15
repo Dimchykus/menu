@@ -1,6 +1,6 @@
 "use client";
 
-import { useModal } from "@/hooks/modals";
+import { useModal } from "@/lib/hooks/use-modals";
 import { Button } from "../ui/button";
 
 interface Props {
