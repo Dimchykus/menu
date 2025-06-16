@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { handleUpdateUserInfo } from "./actions";
 import { getUser } from "@/lib/actions/auth";
+import { OrderDishesButton } from "./order-dishes-button";
 
 const ProfileUserInfo = async () => {
   const user = await getUser();
@@ -20,6 +21,10 @@ const ProfileUserInfo = async () => {
           Update
         </Button>
       </form>
+
+      <div className="mt-6 pt-6 border-t">
+        <OrderDishesButton />
+      </div>
     </div>
   );
 };

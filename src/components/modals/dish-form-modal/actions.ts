@@ -17,12 +17,6 @@ export const handleCreateMenu = async (formData: FormData) => {
   const { id, ...data } = raw;
   const { categoryId } = raw;
 
-  console.log(
-    "oldImage",
-    formData.get("oldImage"),
-    formData.get("oldImage")?.toString(),
-  );
-
   if (raw.id) {
     const dish = await getDishById(raw.id);
 
@@ -31,9 +25,13 @@ export const handleCreateMenu = async (formData: FormData) => {
     }
 
     if (dish.image) {
-      const newImage = await createImage(formData, [dish.image]);
+      if (formData.getAll("image")?.length > 0) {
+        const newImage = await createImage(formData, [dish.image]);
 
-      data.image = newImage[0];
+        data.image = newImage[0];
+      } else {
+        data.image = dish.image;
+      }
     }
   }
 

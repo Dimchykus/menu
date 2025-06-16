@@ -25,6 +25,7 @@ const menuSchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
   price: z.coerce.number().min(0, "Min price is 0"),
+  image: z.instanceof(File).optional(),
 });
 
 export type MenuFormState = z.infer<typeof menuSchema>;
@@ -38,7 +39,10 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
     extraParams: {
       categoryId: props?.categoryId?.toString() || "",
       id: props?.id?.toString() || "",
-      oldImage: props?.data?.image || "",
+    },
+    defaultValues: {
+      price: 0,
+      image: undefined,
     },
     resolver: zodResolver(menuSchema),
     onAction: handleCreateMenu,
@@ -60,6 +64,7 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
           reset({
             name: dish.name,
             description: dish.description || "",
+            price: dish.price || 0,
           });
         }
       });
@@ -69,6 +74,7 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
       reset({
         name: "",
         description: "",
+        price: 0,
       });
     };
   }, []);

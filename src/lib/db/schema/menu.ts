@@ -61,6 +61,7 @@ export const dishTable = pgTable("dishes", {
   price: integer("price"),
   weight: integer("weight"),
   weight_type: text("weight_type"),
+  order: integer("order").default(0),
   // ingredients
 });
 

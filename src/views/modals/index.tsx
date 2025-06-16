@@ -19,6 +19,9 @@ const CategoryFormModal = dynamic(
 const DishFormModal = dynamic(
   () => import("@/components/modals/dish-form-modal"),
 );
+const DishOrderModal = dynamic(
+  () => import("@/components/modals/dish-order-modal"),
+);
 
 const ModalContainer = () => {
   const { modals } = useModal();
@@ -32,6 +35,7 @@ const ModalContainer = () => {
       {modals.menuForm && <MenuFormModal {...modals.menuForm} />}
       {modals.categoryForm && <CategoryFormModal {...modals.categoryForm} />}
       {modals.dishForm && <DishFormModal {...modals.dishForm} />}
+      {modals.dishOrder && <DishOrderModal />}
     </Suspense>
   );
 };

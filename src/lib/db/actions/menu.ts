@@ -18,7 +18,7 @@ import {
   Dish,
 } from "../schema/menu";
 import { getUser } from "@/lib/actions/auth";
-import { eq, and, sql, getTableColumns } from "drizzle-orm";
+import { eq, and, sql, getTableColumns, asc } from "drizzle-orm";
 import { getImage } from "@/lib/actions/images";
 
 export const createRestaurant = async (data: NewRestaurant) => {
@@ -218,7 +218,8 @@ export const getCategoryDishes = async (id: MenuCategory["id"]) => {
   const dishes = await db
     .select()
     .from(dishTable)
-    .where(eq(dishTable.categoryId, id));
+    .where(eq(dishTable.categoryId, id))
+    .orderBy(asc(dishTable.order));
 
   const res = await getDishImages(dishes);
 
@@ -284,7 +285,8 @@ export const getUserEditDishes = async (categoryId: MenuCategory["id"]) => {
   const dishes = await db
     .select()
     .from(dishTable)
-    .where(eq(dishTable.categoryId, categoryId));
+    .where(eq(dishTable.categoryId, categoryId))
+    .orderBy(asc(dishTable.order));
 
   const res = await getDishImages(dishes);
 
@@ -402,6 +404,58 @@ export const updateDish = async (id: number, data: InsertDish) => {
     console.log(e);
 
     return null;
+  }
+};
+
+export const updateDishOrder = async (dishId: number, newOrder: number) => {
+  try {
+    await getUser();
+
+    const dish = await db
+      .update(dishTable)
+      .set({ order: newOrder })
+      .where(eq(dishTable.id, dishId))
+      .returning();
+
+    return dish[0];
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
+export const getAllUserDishesWithHierarchy = async () => {
+  try {
+    const user = await getUser();
+
+    const data = await db
+      .select({
+        restaurantId: restaurantTable.id,
+        restaurantName: restaurantTable.name,
+        menuId: menuTable.id,
+        menuName: menuTable.name,
+        categoryId: menuCategoryTable.id,
+        categoryName: menuCategoryTable.name,
+        dishId: dishTable.id,
+        dishName: dishTable.name,
+        dishOrder: dishTable.order,
+      })
+      .from(restaurantTable)
+      .leftJoin(menuTable, eq(menuTable.restaurantId, restaurantTable.id))
+      .leftJoin(menuCategoryTable, eq(menuCategoryTable.menuId, menuTable.id))
+      .leftJoin(dishTable, eq(dishTable.categoryId, menuCategoryTable.id))
+      .where(eq(restaurantTable.userId, user.userId))
+      .orderBy(
+        asc(restaurantTable.name),
+        asc(menuTable.name),
+        asc(menuCategoryTable.name),
+        asc(dishTable.order),
+      );
+
+    return data;
+  } catch (e) {
+    console.log(e);
+    return [];
   }
 };
 
