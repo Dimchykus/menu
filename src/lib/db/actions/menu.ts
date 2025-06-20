@@ -424,6 +424,43 @@ export const updateDishOrder = async (dishId: number, newOrder: number) => {
   }
 };
 
+export const updateMenuOrder = async (menuId: number, newOrder: number) => {
+  try {
+    await getUser();
+
+    const menu = await db
+      .update(menuTable)
+      .set({ order: newOrder })
+      .where(eq(menuTable.id, menuId))
+      .returning();
+
+    return menu[0];
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
+export const updateCategoryOrder = async (
+  categoryId: number,
+  newOrder: number,
+) => {
+  try {
+    await getUser();
+
+    const category = await db
+      .update(menuCategoryTable)
+      .set({ order: newOrder })
+      .where(eq(menuCategoryTable.id, categoryId))
+      .returning();
+
+    return category[0];
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
 export const getAllUserDishesWithHierarchy = async () => {
   try {
     const user = await getUser();
@@ -434,8 +471,10 @@ export const getAllUserDishesWithHierarchy = async () => {
         restaurantName: restaurantTable.name,
         menuId: menuTable.id,
         menuName: menuTable.name,
+        menuOrder: menuTable.order,
         categoryId: menuCategoryTable.id,
         categoryName: menuCategoryTable.name,
+        categoryOrder: menuCategoryTable.order,
         dishId: dishTable.id,
         dishName: dishTable.name,
         dishOrder: dishTable.order,

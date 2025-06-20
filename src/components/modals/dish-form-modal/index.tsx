@@ -25,7 +25,7 @@ const menuSchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
   price: z.coerce.number().min(0, "Min price is 0"),
-  image: z.instanceof(File).optional(),
+  // image: z.instanceof(File).optional(),
 });
 
 export type MenuFormState = z.infer<typeof menuSchema>;

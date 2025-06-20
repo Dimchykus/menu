@@ -1,7 +1,11 @@
 import HeroSection from "@/components/home/hero-section";
 import Header from "@/components/home/header";
+import Pricing from "@/components/pricing";
+import { getSubscriptionTypes } from "@/lib/db/actions/subscriptions";
 
-export default function Page() {
+export default async function Page() {
+  const subscriptionTypes = await getSubscriptionTypes();
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -44,79 +48,7 @@ export default function Page() {
           </div>
         </div>
       </section>
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">
-            Choose Your Plan
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Starter",
-                price: "$9",
-                features: [
-                  "1 Restaurant Menu",
-                  "Basic Templates",
-                  "QR Code Generation",
-                ],
-              },
-              {
-                name: "Restaurant",
-                price: "$29",
-                features: [
-                  "Multiple Menus",
-                  "Premium Templates",
-                  "Menu Analytics",
-                ],
-              },
-              {
-                name: "Enterprise",
-                price: "$99",
-                features: [
-                  "Unlimited Menus",
-                  "Custom Branding",
-                  "Priority Support",
-                ],
-              },
-            ].map((plan, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border border-gray-200"
-              >
-                <h3 className="text-2xl font-bold mb-4">{plan.name}</h3>
-                <div className="text-4xl font-bold mb-6">
-                  {plan.price}
-                  <span className="text-lg text-gray-600">/mo</span>
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center">
-                      <svg
-                        className="w-5 h-5 text-green-500 mr-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 13l4 4L19 7"
-                        ></path>
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">
-                  Get Started
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      <Pricing subscriptionTypes={subscriptionTypes} />
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">

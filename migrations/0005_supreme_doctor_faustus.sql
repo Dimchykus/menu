@@ -1,0 +1,1 @@
+ALTER TABLE "menus" ADD COLUMN "order" integer DEFAULT 0;

@@ -39,6 +39,7 @@ export const menuTable = pgTable("menus", {
     .references(() => restaurantTable.id),
   name: text("name").notNull(),
   description: text("description"),
+  order: integer("order").default(0),
 });
 
 export const menuCategoryTable = pgTable("menu_categories", {
@@ -48,6 +49,7 @@ export const menuCategoryTable = pgTable("menu_categories", {
     .references(() => menuTable.id),
   name: text("name").notNull(),
   description: text("description"),
+  order: integer("order").default(0),
 });
 
 export const dishTable = pgTable("dishes", {

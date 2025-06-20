@@ -28,6 +28,8 @@ export default async function middleware(request: NextRequest) {
     pathname.startsWith(route),
   );
 
+  console.log("isProtected", pathname, isProtected);
+
   if (isProtected && !isLoggedIn) {
     return NextResponse.redirect(new URL("/signin", request.url));
   }
