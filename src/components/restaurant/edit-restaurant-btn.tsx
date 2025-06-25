@@ -15,6 +15,7 @@ const EditRestaurantBtn: React.FC<Props> = ({ id }) => {
       onClick={() => {
         openModal("restaurantForm", { id });
       }}
+      className="flex-1"
     >
       Edit restaurant
     </Button>

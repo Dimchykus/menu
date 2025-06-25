@@ -1,10 +1,13 @@
 import Header from "@/components/home/header";
 import Link from "next/link";
+import { auth } from "@/auth";
 
-export default function Page() {
+export default async function Page() {
+  const session = await auth();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50">
-      <Header />
+      <Header session={session} />
       <div className="flex items-center justify-center min-h-screen pt-16">
         <div className="text-center max-w-md mx-auto px-6">
           <div className="mb-8 relative">

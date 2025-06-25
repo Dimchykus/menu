@@ -20,7 +20,7 @@ const AddCategoryButton = ({ menuId }: Props) => {
       }}
     >
       <PlusCircle className="w-4 h-4" />
-      Add Category
+      <span className="hidden sm:inline">Add Category</span>
     </Button>
   );
 };

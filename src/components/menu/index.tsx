@@ -13,7 +13,7 @@ interface Props {
 
 const Menu = ({ selectedMenu, restaurant, menu }: Props) => {
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col max-w-full">
       <MenuList
         menu={menu}
         restaurantId={restaurant.id}

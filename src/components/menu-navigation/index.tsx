@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import Link from "next/link";
 import { RestaurantMenuWithCategories } from "@/lib/db/actions/menu";
+import { Sidebar, SidebarContent, SidebarHeader } from "../ui/sidebar";
 
 interface Category {
   id: number;
@@ -25,9 +26,16 @@ interface Props {
 
 const MenuNavigation = ({ restaurant, menu, selectedMenu }: Props) => {
   return (
-    <div className="w-64 border-r border-border bg-card">
-      <div className="p-4">
-        <h2 className="text-lg font-semibold mb-4">{restaurant.name}</h2>
+    <Sidebar className="w-64 border-r border-border bg-neutral-100">
+      <SidebarHeader className="flex items-center justify-center">
+        <Link
+          href={`/restaurant/${restaurant.id}`}
+          className="text-lg font-semibold"
+        >
+          {restaurant.name}
+        </Link>
+      </SidebarHeader>
+      <SidebarContent className="p-4 bg-neutral-100">
         <Accordion
           type="multiple"
           defaultValue={selectedMenu ? [`menu-${selectedMenu}`] : []}
@@ -71,8 +79,8 @@ const MenuNavigation = ({ restaurant, menu, selectedMenu }: Props) => {
             </AccordionItem>
           ))}
         </Accordion>
-      </div>
-    </div>
+      </SidebarContent>
+    </Sidebar>
   );
 };
 

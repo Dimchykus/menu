@@ -15,6 +15,7 @@ const EditScheduleBtn: React.FC<Props> = ({ id }) => {
       onClick={() => {
         openModal("scheduleForm", { id });
       }}
+      className="flex-1"
     >
       Edit schedule
     </Button>

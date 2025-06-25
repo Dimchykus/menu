@@ -14,9 +14,12 @@ const MenuList = ({ menu, restaurantId, selectedMenu }: Props) => {
       <Carousel>
         <CarouselContent className="p-4">
           {menu.map((item) => (
-            <CarouselItem key={item.id} className="basis-[300px]">
+            <CarouselItem
+              key={item.id}
+              className="basis-[200px] sm:basis-[300px]"
+            >
               <Link
-                className={`block p-6 rounded-xl border transition-all duration-200 ease-out cursor-pointer
+                className={`block p-2 sm:p-6 rounded-xl border transition-all duration-200 ease-out cursor-pointer
                 ${
                   selectedMenu === item.id
                     ? "bg-primary/5 border-primary"

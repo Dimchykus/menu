@@ -24,6 +24,8 @@ export default async function Page(props: {
 
   if (!restaurant || !menu) {
     notFound();
+
+    return;
   }
 
   return (

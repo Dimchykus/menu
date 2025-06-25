@@ -1,6 +1,6 @@
 import { signIn } from "@/auth";
 import { Button } from "../ui/button";
-import Icon from "@/icons/github.svg";
+import { Github } from "lucide-react";
 
 const GitHubAuth = () => {
   const handleAuth = async () => {
@@ -9,7 +9,7 @@ const GitHubAuth = () => {
 
   return (
     <Button className="flex items-center gap-2" onClick={handleAuth}>
-      <Icon />
+      <Github />
       GitHub
     </Button>
   );

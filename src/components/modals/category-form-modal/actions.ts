@@ -38,13 +38,15 @@ export const handleCreateMenu = async (formData: FormData) => {
 
   console.log("id", id);
 
-  const menu = id
+  const category = id
     ? await updateCategory(parseInt(id), data)
     : await createCategory({ ...data, menuId });
 
+  console.log("category", category);
+
   revalidatePath(`/profile`);
 
-  if (!menu) {
+  if (!category) {
     return {
       error: "Failed to save category",
       fields: raw,

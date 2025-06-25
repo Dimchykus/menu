@@ -2,8 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import type { Session } from "next-auth";
 
-export default function Header() {
+interface HeaderProps {
+  session: Session | null;
+}
+
+export default function Header({ session }: HeaderProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -11,7 +16,7 @@ export default function Header() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY) {
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
@@ -47,12 +52,22 @@ export default function Header() {
             >
               Restaurants
             </Link>
-            <Link
-              href="/signin"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors"
-            >
-              Login
-            </Link>
+            {!session && (
+              <Link
+                href="/signin"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors"
+              >
+                Login
+              </Link>
+            )}
+            {session && (
+              <Link
+                href="/profile"
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500 transition-colors"
+              >
+                Profile
+              </Link>
+            )}
           </nav>
         </div>
       </div>

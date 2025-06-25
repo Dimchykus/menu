@@ -23,7 +23,7 @@ const EditDishes = async ({ categoryId }: Props) => {
             key={dish.id}
             className="group relative overflow-hidden rounded-lg bg-white p-4 shadow-md transition-all hover:shadow-lg border"
           >
-            <div className="absolute right-2 top-2 z-10 flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+            <div className="absolute right-2 top-2 z-10 flex gap-1 bg-white/50 backdrop-blur-sm rounded-lg p-1">
               <EditDishButton
                 id={dish.id}
                 categoryId={categoryId}

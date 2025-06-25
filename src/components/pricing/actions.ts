@@ -1,6 +1,8 @@
 import { getUser } from "@/lib/actions/auth";
+import { checkIfUserHasActiveSubscription } from "@/lib/db/actions/subscriptions";
 import { loadStripe } from "@stripe/stripe-js/pure";
 import { redirect } from "next/navigation";
+import { toast } from "sonner";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
 
@@ -10,7 +12,17 @@ export const handleCheckout = async (
   productName: string,
 ) => {
   try {
-    await getUser();
+    const user = await getUser();
+
+    const userHasActiveSubscription = await checkIfUserHasActiveSubscription(
+      user.userId,
+    );
+
+    if (userHasActiveSubscription) {
+      toast.error("You already have an active subscription");
+
+      return;
+    }
 
     const stripe = await loadStripe(
       "pk_test_51RaugwGdmQIWpFFJnjOAZoLwi0rzfnHNbglniyrA2EmAM7A4JoTL0aZ5zbngOXl7lipUzETXDH3fwQf9tXah7qo100UzfMiCch",

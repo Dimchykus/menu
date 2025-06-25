@@ -20,7 +20,7 @@ const AddMenuButton = ({ restaurantId }: Props) => {
       }}
     >
       <PlusCircle className="w-4 h-4" />
-      Add Menu
+      <span className="hidden sm:inline">Add Menu</span>
     </Button>
   );
 };

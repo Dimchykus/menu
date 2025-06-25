@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/lib/providers/query";
 import { ThemeProvider } from "@/lib/providers/theme";
+import AuthProvider from "@/lib/providers/auth";
 import { ModalProvider } from "@/context/modals";
 import ModalContainer from "@/views/modals";
 import { Toaster } from "sonner";
@@ -36,20 +37,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased grow-1 flex flex-col bg-neutral-50`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ReactQueryProvider>
-            <ModalProvider>
-              {children}
-              <ModalContainer />
-              <Toaster />
-            </ModalProvider>
-          </ReactQueryProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ReactQueryProvider>
+              <ModalProvider>
+                {children}
+                <ModalContainer />
+                <Toaster />
+              </ModalProvider>
+            </ReactQueryProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

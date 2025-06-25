@@ -1,3 +1,5 @@
+"use client";
+
 import { RestaurantMenuWithCategories } from "@/lib/db/actions/menu";
 import { Utensils } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
@@ -17,22 +19,37 @@ const MenuCategories = ({ menu, restaurantId, selectedMenu }: Props) => {
   }
 
   return (
-    <div className="bg-background border-b border-border">
+    <div className="bg-background border-b border-border sticky top-0 z-10">
       <Carousel>
         <CarouselContent className="p-4">
           {selectedMenuData.categories?.map((category) => (
-            <CarouselItem key={category.id} className="basis-[300px]">
+            <CarouselItem
+              key={category.id}
+              className="basis-[250px] sm:basis-[300px]"
+            >
               <Link
                 href={`/restaurant/${restaurantId}/menu/${selectedMenu}#category-${category.id}`}
-                className="block group bg-card hover:bg-accent/50 rounded-xl p-4 border border-border transition-colors"
-                scroll={false}
+                className="block group bg-card hover:bg-accent/50 rounded-xl p-2 sm:p-4 border border-border transition-colors"
+                onClick={() => {
+                  const categoryBlock = document.getElementById(
+                    `category-${category.id}`,
+                  );
+
+                  if (!categoryBlock) return;
+
+                  categoryBlock.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest",
+                    inline: "center",
+                  });
+                }}
               >
-                <div className="flex items-start gap-4">
+                <div className="flex-1 flex items-start gap-4">
                   <div className="p-3 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
                     <Utensils className="w-6 h-6" />
                   </div>
-                  <div>
-                    <h3 className="font-medium text-lg mb-2">
+                  <div className="self-center flex-1 flex justify-between sm:flex-col">
+                    <h3 className="font-medium text-lg mb-2 text-ellipsis overflow-hidden">
                       {category.name}
                     </h3>
                     <div className="flex items-center gap-2">

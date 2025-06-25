@@ -25,7 +25,7 @@ export default async function Page({
   if (res.notFound) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-pink-50">
-        <Header />
+        <Header session={session} />
         <div className="flex items-center justify-center min-h-screen pt-16">
           <div className="text-center max-w-md mx-auto px-6">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
@@ -49,7 +49,7 @@ export default async function Page({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
-      <Header />
+      <Header session={session} />
       <div className="flex items-center justify-center min-h-screen pt-16">
         <div className="text-center max-w-md mx-auto px-6">
           <div className="mb-8 relative">

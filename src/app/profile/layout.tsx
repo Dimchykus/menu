@@ -1,5 +1,6 @@
 import Header from "@/components/header/index";
 import Sidebar from "@/components/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function Layout({
   children,
@@ -7,12 +8,14 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col flex-1">
-      <Header />
-      <div className="flex flex-1">
-        <Sidebar />
-        <div className="flex-1 p-6">{children}</div>
+    <SidebarProvider>
+      <Sidebar />
+      <div className="flex flex-col flex-1">
+        <Header title="Profile" />
+        <div className="flex flex-1">
+          <div className="flex-1 p-4 sm:p-6">{children}</div>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }

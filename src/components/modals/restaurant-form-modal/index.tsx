@@ -25,6 +25,8 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
   const [formValues, setFormValues] = useState({
     name: "",
     description: "",
+    address: "",
+    phone: "",
   });
 
   const [state, formAction, pending] = useActionState(handleCreateRestaurant, {
@@ -46,6 +48,8 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
           setFormValues({
             name: restaurant.name,
             description: restaurant.description || "",
+            address: restaurant.address || "",
+            phone: restaurant.phone || "",
           });
         }
       });
@@ -55,6 +59,8 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
       setFormValues({
         name: "",
         description: "",
+        address: "",
+        phone: "",
       });
     };
   }, []);
@@ -113,6 +119,39 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
                     ...prev,
                     description: e.target.value,
                   }))
+                }
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="address" className="text-right">
+                Address
+              </Label>
+              <Input
+                id="address"
+                name="address"
+                placeholder="123 Main St"
+                className="col-span-3"
+                value={formValues.address}
+                onChange={(e) =>
+                  setFormValues((prev) => ({
+                    ...prev,
+                    address: e.target.value,
+                  }))
+                }
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="phone" className="text-right">
+                Phone
+              </Label>
+              <Input
+                id="phone"
+                name="phone"
+                placeholder="123-456-7890"
+                className="col-span-3"
+                value={formValues.phone}
+                onChange={(e) =>
+                  setFormValues((prev) => ({ ...prev, phone: e.target.value }))
                 }
               />
             </div>

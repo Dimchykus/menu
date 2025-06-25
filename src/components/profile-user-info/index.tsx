@@ -9,7 +9,7 @@ const ProfileUserInfo = async () => {
   const user = await getUser();
 
   return (
-    <div className="w-[500px]">
+    <div className="max-w-[500px] w-full">
       <p className="text-2xl font-bold mb-6">Setting</p>
 
       <form action={handleUpdateUserInfo}>

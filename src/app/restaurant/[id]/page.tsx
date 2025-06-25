@@ -1,5 +1,9 @@
 import Restaurant from "@/components/restaurant";
-import { getRestaurantById, getSchedule } from "@/lib/db/actions/menu";
+import {
+  getRestaurantById,
+  getRestaurantMenu,
+  getSchedule,
+} from "@/lib/db/actions/menu";
 import { redirect } from "next/navigation";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
@@ -8,14 +12,17 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
   const restaurant = await getRestaurantById(restaurantId);
   const schedule = await getSchedule(restaurantId);
+  const menus = await getRestaurantMenu(restaurantId);
 
   if (!restaurant) {
     redirect("/restaurants");
+
+    return;
   }
 
   return (
     <div className="p-6">
-      <Restaurant restaurant={restaurant} schedule={schedule} />
+      <Restaurant restaurant={restaurant} schedule={schedule} menus={menus} />
     </div>
   );
 }

@@ -16,7 +16,7 @@ const AddRestaurantButton = () => {
       }}
     >
       <PlusCircle className="w-4 h-4" />
-      Add Restaurant
+      <span className="hidden sm:inline">Add Restaurant</span>
     </Button>
   );
 };

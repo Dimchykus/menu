@@ -2,13 +2,15 @@ import HeroSection from "@/components/home/hero-section";
 import Header from "@/components/home/header";
 import Pricing from "@/components/pricing";
 import { getSubscriptionTypes } from "@/lib/db/actions/subscriptions";
+import { auth } from "@/auth";
 
 export default async function Page() {
   const subscriptionTypes = await getSubscriptionTypes();
+  const session = await auth();
 
   return (
     <div className="min-h-screen">
-      <Header />
+      <Header session={session} />
       <HeroSection />
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">

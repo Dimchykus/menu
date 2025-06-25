@@ -11,12 +11,16 @@ export const handleCreateRestaurant = async (
   const restaurantSchema = z.object({
     name: z.string().min(1, "Name is required"),
     description: z.string().min(1, "Description is required"),
+    address: z.string().min(1, "Address is required"),
+    phone: z.string().min(1, "Phone is required"),
     id: z.string().optional(),
   });
 
   const raw = {
     name: formData.get("name")?.toString() || "",
     description: formData.get("description")?.toString() || "",
+    address: formData.get("address")?.toString() || "",
+    phone: formData.get("phone")?.toString() || "",
     id: formData.get("id")?.toString(),
   };
 

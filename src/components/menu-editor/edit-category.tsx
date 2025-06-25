@@ -32,12 +32,12 @@ const EditCategories = async ({ restaurantId, menuId }: Props) => {
           <AccordionItem
             key={category.id}
             value={category.id.toString()}
-            className="border rounded-lg px-6"
+            className="border rounded-lg px-4 sm:px-6"
           >
             <AccordionTrigger className="hover:no-underline">
-              <div className="flex flex-1 items-center justify-between pr-4">
+              <div className="flex flex-1 items-center justify-between">
                 <div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="text-base font-medium">
                       {category.name}
                     </span>
@@ -55,11 +55,11 @@ const EditCategories = async ({ restaurantId, menuId }: Props) => {
                     </span>
                   )}
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-md">
-                    {/* {category.dishesCount || 0} dishes */}
+                {/* <div className="flex items-center gap-2">
+                  <span className="text-xs whitespace-nowrap bg-primary/10 text-primary px-2 py-1 rounded-md">
+                    {category. || 0} dishes
                   </span>
-                </div>
+                </div> */}
               </div>
             </AccordionTrigger>
             <AccordionContent>

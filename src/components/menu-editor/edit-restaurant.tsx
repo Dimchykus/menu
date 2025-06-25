@@ -25,12 +25,12 @@ const EditRestaurants = async () => {
         <AccordionItem
           key={restaurant.id}
           value={restaurant.id.toString()}
-          className="border rounded-lg px-6"
+          className="border rounded-lg px-4 sm:px-6"
         >
           <AccordionTrigger className="hover:no-underline">
-            <div className="flex flex-1 items-center justify-between pr-4">
+            <div className="flex flex-1 items-center justify-between">
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <h4 className="text-base font-medium">{restaurant.name}</h4>
                   <EditRestaurantButton id={restaurant.id} />
                   <Link href={`/restaurant/${restaurant.id}`}>
@@ -44,14 +44,16 @@ const EditRestaurants = async () => {
                   </span>
                 )}
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-md">
-                  {restaurant.menusCount || 0} menus
-                </span>
-              </div>
+              {restaurant.menusCount > 0 && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs whitespace-nowrap bg-primary/10 text-primary px-2 py-1 rounded-md">
+                    {restaurant.menusCount || 0} menus
+                  </span>
+                </div>
+              )}
             </div>
           </AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="p-0">
             <EditMenus restaurantId={restaurant.id} />
           </AccordionContent>
         </AccordionItem>

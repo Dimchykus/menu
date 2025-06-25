@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import stripe from "@/lib/stripe";
 import {
+  checkIfPaymentExists,
   createSubscription,
   getSubscriptionTypeById,
 } from "@/lib/db/actions/subscriptions";
@@ -20,21 +21,23 @@ export const handleSaveSubscription = async (
   }
 
   if (typeof sessionId !== "string") {
-    console.log("sessionId is not a string");
-
     return {
       notFound: true,
     };
   }
 
   try {
+    const paymentExists = await checkIfPaymentExists(sessionId);
+
+    if (paymentExists) {
+      return {
+        notFound: true,
+      };
+    }
     const stripeSession = await stripe.checkout.sessions.retrieve(sessionId, {
       expand: ["line_items.data.price.product"],
     });
 
-    console.log("stripeSession", stripeSession);
-
-    // Only save to DB if payment was successful
     if (stripeSession.payment_status === "paid") {
       const productName =
         stripeSession.line_items?.data[0]?.description || "Unknown";
@@ -44,8 +47,6 @@ export const handleSaveSubscription = async (
       const endDate = calculateSubscriptionEndDate(subscriptionType?.duration);
 
       if (!subscriptionType || !endDate) {
-        console.log("subscriptionType or endDate is not found");
-
         return {
           notFound: true,
         };
@@ -60,6 +61,7 @@ export const handleSaveSubscription = async (
         paymentCurrency: stripeSession.currency || "usd",
         paymentDate: new Date(stripeSession.created * 1000), // Convert Unix timestamp
         paymentType: productName,
+        subscriptionTypeId: subscriptionType.id,
         endDate,
       });
     }

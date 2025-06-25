@@ -75,7 +75,7 @@ export const subscriptionTable = pgTable("subscriptions", {
     .notNull()
     .references(() => subscriptionTypeTable.id),
   endDate: timestamp("end_date").notNull(),
-  paymentId: text("payment_id").notNull(),
+  paymentId: text("payment_id").notNull().unique(),
   paymentStatus: text("payment_status").notNull(),
   paymentMethod: text("payment_method").notNull(),
   paymentAmount: integer("payment_amount").notNull(),

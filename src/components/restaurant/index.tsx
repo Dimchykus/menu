@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import {
+  Menu,
   SelectSchedule,
   type Restaurant as RestaurantI,
 } from "@/lib/db/schema/menu";
@@ -12,13 +13,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { capitalizeFirstLetter } from "@/utils/text";
-import { Button } from "../ui/button";
 import Link from "next/link";
 import EditRestaurantBtn from "./edit-restaurant-btn";
+import { ChevronRight, MapPin, Phone } from "lucide-react";
 
 interface Props {
   restaurant: RestaurantI;
   schedule: SelectSchedule[];
+  menus: Menu[];
 }
 
 const isCurrentlyOpen = (
@@ -43,7 +45,7 @@ const isCurrentlyOpen = (
   return currentTime >= openTime && currentTime <= closeTime;
 };
 
-const Restaurant: React.FC<Props> = async ({ restaurant, schedule }) => {
+const Restaurant: React.FC<Props> = async ({ restaurant, schedule, menus }) => {
   const session = await auth();
   const today = new Date()
     .toLocaleString("en-US", { weekday: "long" })
@@ -73,12 +75,68 @@ const Restaurant: React.FC<Props> = async ({ restaurant, schedule }) => {
             {isOpen ? "Open" : "Closed"}
           </div>
         </div>
-        <p className="text-gray-600 mb-4">{restaurant.description}</p>
-        <p className="text-gray-800">Address: {restaurant.address}</p>
-        <p className="text-gray-800">Phone: {restaurant.phone}</p>
+        <p className="text-gray-600 mb-4 leading-relaxed text-sm">
+          {restaurant.description}
+        </p>
+        <div className="mt-4 mb-6">
+          {menus.length > 0 ? (
+            <div className="space-y-2">
+              {menus.map((menu) => (
+                <Link
+                  key={menu.id}
+                  href={`/restaurant/${restaurant.id}/menu/${menu.id}`}
+                  className="flex items-center p-2 border rounded-lg hover:bg-gray-100 transition-colors duration-300"
+                >
+                  <span className="flex flex-col">
+                    <span className="text-lg font-medium">{menu.name}</span>
+                    <span className="text-xs text-gray-500">
+                      {menu.description}
+                    </span>
+                  </span>
+                  <ChevronRight className="ml-auto" />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <>
+              <h3 className="text-lg font-semibold mb-2">Menus</h3>
+              <p className="text-gray-600 mb-6 leading-relaxed text-sm">
+                Restaurant has no menus yet.
+              </p>
+            </>
+          )}
+        </div>
+        <div className="space-y-3 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="border rounded-lg p-2 bg-primary/10">
+              <MapPin />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">
+                Address
+              </p>
+              <p className="text-gray-800 text-sm font-medium">
+                {restaurant.address}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="border rounded-lg p-2 bg-primary/10">
+              <Phone />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">
+                Phone
+              </p>
+              <p className="text-gray-800 text-sm font-medium">
+                {restaurant.phone}
+              </p>
+            </div>
+          </div>
+        </div>
         {schedule.length > 0 && (
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="item-1">
+          <Accordion type="single" collapsible className="w-full ">
+            <AccordionItem value="item-1" className="border-0">
               <AccordionTrigger className="hover:no-underline cursor-pointer">
                 Schedule
               </AccordionTrigger>
@@ -115,7 +173,7 @@ const Restaurant: React.FC<Props> = async ({ restaurant, schedule }) => {
             </AccordionItem>
           </Accordion>
         )}
-        <div className="flex gap-1">
+        <div className="flex gap-1 flex-wrap">
           {session?.user?.userId && (
             <>
               <EditScheduleBtn id={restaurant.id} />
@@ -123,9 +181,6 @@ const Restaurant: React.FC<Props> = async ({ restaurant, schedule }) => {
             </>
           )}
         </div>
-        <Button className="w-full mt-2" asChild>
-          <Link href={`/restaurant/${restaurant.id}/menu`}>Open menu</Link>
-        </Button>
       </div>
     </div>
   );

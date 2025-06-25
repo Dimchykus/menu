@@ -23,6 +23,29 @@ export const getSubscriptionTypeById = async (id: number) => {
   return subscription[0] || null;
 };
 
+export const checkIfPaymentExists = async (id: string) => {
+  const payment = await db
+    .select()
+    .from(subscriptionTable)
+    .where(eq(subscriptionTable.paymentId, id));
+
+  return payment.length > 0;
+};
+
+export const checkIfUserHasActiveSubscription = async (userId: number) => {
+  const subscription = await db
+    .select()
+    .from(subscriptionTable)
+    .where(
+      and(
+        eq(subscriptionTable.userId, userId),
+        gt(subscriptionTable.endDate, new Date()),
+      ),
+    );
+
+  return subscription.length > 0;
+};
+
 export const createSubscription = async (
   subscriptionData: SubscriptionInsert,
 ) => {
