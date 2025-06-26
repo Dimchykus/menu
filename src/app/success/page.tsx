@@ -7,7 +7,7 @@ import { handleSaveSubscription } from "./actions";
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { session_id: string; planId: string };
+  searchParams: Promise<{ session_id: string; planId: string }>;
 }) {
   const session = await auth();
 
