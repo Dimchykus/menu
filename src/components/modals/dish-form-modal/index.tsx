@@ -42,7 +42,6 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
     },
     defaultValues: {
       price: 0,
-      image: undefined,
     },
     resolver: zodResolver(menuSchema),
     onAction: handleCreateMenu,

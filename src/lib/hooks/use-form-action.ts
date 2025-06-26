@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback, useMemo, useState } from "react";
+import { useCallback } from "react";
 import { type FieldValues, type UseFormProps, useForm } from "react-hook-form";
 
 type UseFormActionProps<
@@ -37,7 +37,7 @@ const useFormAction = <
   props: UseFormActionProps<TFieldValues, TContext>,
 ) => {
   const { onAction, onSuccess } = props;
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [isSubmitting, setIsSubmitting] = useState(false);
 
   /**
    * Returns the form object with provided props.
@@ -62,7 +62,7 @@ const useFormAction = <
 
       if (isValid) {
         try {
-          setIsSubmitting(true);
+          // setIsSubmitting(true);
 
           if (props.extraParams) {
             for (const [key, value] of Object.entries(props.extraParams)) {
@@ -74,10 +74,9 @@ const useFormAction = <
 
           onSuccess?.();
         } catch (e) {
-          // eslint-disable-next-line no-console
           console.log("Error:", e);
         } finally {
-          setIsSubmitting(false);
+          // setIsSubmitting(false);
         }
       }
     },

@@ -1,6 +1,5 @@
 "use client";
 
-import { Dish } from "@/lib/db/schema/menu";
 import { createContext, useState, ReactNode } from "react";
 
 export interface ModalPropsMap {
