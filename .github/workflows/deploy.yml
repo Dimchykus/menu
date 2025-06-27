@@ -1,5 +1,8 @@
 name: Deploy
 
+env:
+  POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+
 on:
   push:
     branches:
