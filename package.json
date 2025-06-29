@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm run db:push && next build",
     "start": "next start",
     "lint": "next lint",
     "start-db": "supabase start",
-    "stop-db": "supabase stop"
+    "stop-db": "supabase stop",
+    "db:push": "drizzle-kit push"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.828.0",
