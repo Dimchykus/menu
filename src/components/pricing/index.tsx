@@ -5,7 +5,7 @@ interface PricingProps {
   subscriptionTypes: Awaited<ReturnType<typeof getSubscriptionTypes>>;
 }
 
-const Pricing = ({ subscriptionTypes }: PricingProps) => {
+const Pricing = async ({ subscriptionTypes }: PricingProps) => {
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">

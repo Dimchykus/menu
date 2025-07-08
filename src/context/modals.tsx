@@ -28,8 +28,16 @@ export const ModalContext = createContext<ModalContextType | undefined>(
 
 const initialModalState: ModalPropsMap = {};
 
-export const ModalProvider = ({ children }: { children: ReactNode }) => {
-  const [modals, setModals] = useState<ModalPropsMap>(initialModalState);
+export const ModalProvider = ({
+  children,
+  defaultValues,
+}: {
+  children: ReactNode;
+  defaultValues?: ModalPropsMap;
+}) => {
+  const [modals, setModals] = useState<ModalPropsMap>(
+    defaultValues || initialModalState,
+  );
 
   const openModal = <T extends ModalKey>(
     type: T,

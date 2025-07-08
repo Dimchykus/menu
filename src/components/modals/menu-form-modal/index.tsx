@@ -18,6 +18,7 @@ import { X } from "lucide-react";
 import { getMenuById } from "@/lib/db/actions/menu";
 import { Menu } from "@/lib/db/schema/menu";
 import useFormAction from "@/lib/hooks/use-form-action";
+import { Label } from "@/components/ui/label";
 
 const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
   const { closeModal } = useModal();
@@ -67,6 +68,7 @@ const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
           <DialogDescription>Enter menu information</DialogDescription>
           <DialogClose
             asChild
+            data-testid="close-modal"
             onClick={() => {
               closeModal("menuForm");
             }}

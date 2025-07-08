@@ -8,14 +8,16 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <SidebarProvider>
-      <Sidebar />
-      <div className="flex flex-col flex-1">
-        <Header title="Profile" />
-        <div className="flex flex-1">
-          <div className="flex-1 p-4 sm:p-6">{children}</div>
+    <div data-testid="profile-layout">
+      <SidebarProvider>
+        <Sidebar />
+        <div className="flex flex-col flex-1">
+          <Header title="Profile" />
+          <div className="flex flex-1">
+            <div className="flex-1 p-4 sm:p-6">{children}</div>
+          </div>
         </div>
-      </div>
-    </SidebarProvider>
+      </SidebarProvider>
+    </div>
   );
 }

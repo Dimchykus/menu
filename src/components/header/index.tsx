@@ -29,7 +29,7 @@ const Header = async ({ title }: HeaderProps) => {
       </SidebarTrigger>
       <div>
         {title ? (
-          <h1 className="font-bold text-2xl">{title}</h1>
+          <h2 className="font-bold text-2xl">{title}</h2>
         ) : (
           <Link href="/" className="font-bold text-2xl">
             MenuMaker

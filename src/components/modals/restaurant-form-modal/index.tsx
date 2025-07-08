@@ -32,7 +32,7 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
   const [state, formAction, pending] = useActionState(handleCreateRestaurant, {
     success: false,
     restaurant: null,
-    error: "",
+    error: "1",
   });
 
   useEffect(() => {
@@ -76,6 +76,7 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
           <DialogDescription>Enter restaurant information</DialogDescription>
           <DialogClose
             asChild
+            data-testid="close-modal"
             onClick={() => {
               closeModal("restaurantForm");
             }}
@@ -105,7 +106,7 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
+              <Label htmlFor="description" className="text-right">
                 Description
               </Label>
               <Input

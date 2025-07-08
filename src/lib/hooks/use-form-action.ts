@@ -58,8 +58,6 @@ const useFormAction = <
        */
       const isValid = await form.trigger();
 
-      console.log("isValid", isValid);
-
       if (isValid) {
         try {
           // setIsSubmitting(true);
@@ -82,13 +80,6 @@ const useFormAction = <
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [form.trigger, onAction, props.values],
-  );
-
-  console.log(
-    "state",
-    form.formState,
-    form.formState.errors,
-    JSON.stringify({ ...form.formState }),
   );
 
   // return useMemo(

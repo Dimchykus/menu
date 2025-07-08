@@ -9,28 +9,25 @@ export const login = async (formData: FormData) => {
 };
 
 export const signup = async (formData: FormData) => {
-  try {
-    const data = Object.fromEntries(formData.entries());
+  const data = Object.fromEntries(formData.entries());
 
-    const body = { ...data, provider: "web" };
+  const body = { ...data, provider: "web" };
 
-    const response = await fetch(`${baseUrl}/api/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
+  const response = await fetch(`${baseUrl}/api/signup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
 
-    if (!response.ok) {
-      throw new Error(`Signup failed: ${response.statusText}`);
-    }
-
-    const result = await response.json();
-    return result;
-  } catch (e) {
-    console.error("Signup error:", e);
+  if (!response.ok) {
+    throw new Error(`Signup failed: ${response.statusText}`);
   }
+
+  const result = await response.json();
+
+  return result;
 };
 
 export const logout = async () => {

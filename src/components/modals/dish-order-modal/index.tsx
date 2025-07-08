@@ -60,6 +60,8 @@ const DishOrderModal = () => {
     mutate();
   }, []);
 
+  console.log("------groupedData", groupedData);
+
   if (!groupedData || isPending) {
     return (
       <Dialog open>
