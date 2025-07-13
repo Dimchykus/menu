@@ -12,6 +12,7 @@
     "start-db": "supabase start",
     "stop-db": "supabase stop",
     "db:push": "drizzle-kit push",
+    "db:migrate": "drizzle-kit migrate",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
     "test:e2e": "playwright test"
