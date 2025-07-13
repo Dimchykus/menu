@@ -60,8 +60,6 @@ const DishOrderModal = () => {
     mutate();
   }, []);
 
-  console.log("------groupedData", groupedData);
-
   if (!groupedData || isPending) {
     return (
       <Dialog open>
@@ -109,7 +107,10 @@ const DishOrderModal = () => {
                   .map((menuId) => (
                     <div key={menuId}>
                       <div className="flex items-center gap-2 mb-2">
-                        <h3 className="text-md font-bold">
+                        <h3
+                          className="text-md font-bold"
+                          data-testid="menu-name"
+                        >
                           {groupedData[restaurantId].menus[menuId].order}.{" "}
                           {groupedData[restaurantId].menus[menuId].menuName}
                         </h3>
@@ -118,6 +119,7 @@ const DishOrderModal = () => {
                             variant="outline"
                             size="icon"
                             disabled={isPending}
+                            data-testid="menu-up-button"
                             onClick={() =>
                               updateMenuOrder(
                                 menuId,
@@ -136,6 +138,7 @@ const DishOrderModal = () => {
                               groupedData[restaurantId].menus[menuId].order ===
                                 0
                             }
+                            data-testid="menu-down-button"
                             onClick={() =>
                               updateMenuOrder(
                                 menuId,
@@ -164,7 +167,10 @@ const DishOrderModal = () => {
                           .map((categoryId) => (
                             <div key={categoryId} className="mr-4">
                               <div className="flex items-center gap-2 mb-2">
-                                <h4 className="text-sm font-bold">
+                                <h4
+                                  className="text-sm font-bold"
+                                  data-testid="category-name"
+                                >
                                   {
                                     groupedData[restaurantId].menus[menuId]
                                       .categories[categoryId].order
@@ -180,6 +186,7 @@ const DishOrderModal = () => {
                                     variant="outline"
                                     size="icon"
                                     disabled={isPending}
+                                    data-testid="category-up-button"
                                     onClick={() =>
                                       updateCategoryOrder(
                                         categoryId,
@@ -198,6 +205,7 @@ const DishOrderModal = () => {
                                       groupedData[restaurantId].menus[menuId]
                                         .categories[categoryId].order === 0
                                     }
+                                    data-testid="category-down-button"
                                     onClick={() =>
                                       updateCategoryOrder(
                                         categoryId,
@@ -228,6 +236,7 @@ const DishOrderModal = () => {
                                     <div
                                       key={dishId}
                                       className="flex items-center gap-2 mr-8"
+                                      data-testid="dish-name"
                                     >
                                       {
                                         groupedData[restaurantId].menus[menuId]
@@ -245,6 +254,7 @@ const DishOrderModal = () => {
                                           variant="outline"
                                           size="icon"
                                           disabled={isPending}
+                                          data-testid="dish-up-button"
                                           onClick={() =>
                                             updateDishOrder(
                                               dishId,
@@ -269,6 +279,7 @@ const DishOrderModal = () => {
                                               dishId
                                             ].order === 0
                                           }
+                                          data-testid="dish-down-button"
                                           onClick={() =>
                                             updateDishOrder(
                                               dishId,

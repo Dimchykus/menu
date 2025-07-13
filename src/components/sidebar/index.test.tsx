@@ -7,10 +7,6 @@ vi.mock("@/utils/isMobile", () => ({
   isMobileDevice: vi.fn(),
 }));
 
-vi.mock("@/hooks/use-mobile", () => ({
-  useIsMobile: vi.fn(),
-}));
-
 vi.mock("next/link", () => ({
   default: ({
     children,
@@ -23,9 +19,7 @@ vi.mock("next/link", () => ({
 
 test("renders sidebar with all navigation links on desktop", async () => {
   const { isMobileDevice } = await import("@/utils/isMobile");
-  const { useIsMobile } = await import("@/hooks/use-mobile");
   vi.mocked(isMobileDevice).mockResolvedValue(false);
-  vi.mocked(useIsMobile).mockReturnValue(false);
 
   render(<SidebarProvider>{await Sidebar()}</SidebarProvider>);
 
@@ -70,9 +64,7 @@ test("renders sidebar with all navigation links on desktop", async () => {
 
 test("returns null on mobile devices", async () => {
   const { isMobileDevice } = await import("@/utils/isMobile");
-  const { useIsMobile } = await import("@/hooks/use-mobile");
   vi.mocked(isMobileDevice).mockResolvedValue(true);
-  vi.mocked(useIsMobile).mockReturnValue(true);
 
   const { container } = render(
     <SidebarProvider>{await Sidebar()}</SidebarProvider>,
@@ -83,9 +75,7 @@ test("returns null on mobile devices", async () => {
 
 test("sidebar has correct styling and structure", async () => {
   const { isMobileDevice } = await import("@/utils/isMobile");
-  const { useIsMobile } = await import("@/hooks/use-mobile");
   vi.mocked(isMobileDevice).mockResolvedValue(false);
-  vi.mocked(useIsMobile).mockReturnValue(false);
 
   const { container } = render(
     <SidebarProvider>{await Sidebar()}</SidebarProvider>,
@@ -101,4 +91,15 @@ test("sidebar has correct styling and structure", async () => {
   expect(content).toBeInTheDocument();
 
   expect(header).toHaveTextContent("MenuMaker");
+});
+
+test("sidebar on mobile", async () => {
+  const { isMobileDevice } = await import("@/utils/isMobile");
+  vi.mocked(isMobileDevice).mockResolvedValue(true);
+
+  const { container } = render(
+    <SidebarProvider>{await Sidebar()}</SidebarProvider>,
+  );
+
+  expect(container.firstChild?.firstChild).toBeNull();
 });

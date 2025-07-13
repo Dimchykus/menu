@@ -4,7 +4,7 @@ import { createImage } from "@/lib/actions/images";
 import { createDish, getDishById, updateDish } from "@/lib/db/actions/menu";
 import { revalidatePath } from "next/cache";
 
-export const handleCreateMenu = async (formData: FormData) => {
+export const handleUpdateDish = async (formData: FormData) => {
   const raw = {
     name: formData.get("name")?.toString() || "",
     description: formData.get("description")?.toString() || "",
@@ -35,13 +35,13 @@ export const handleCreateMenu = async (formData: FormData) => {
     }
   }
 
-  const menu = id
+  const dish = id
     ? await updateDish(id, data)
     : await createDish({ ...data, categoryId });
 
   revalidatePath(`/profile`);
 
-  if (!menu) {
+  if (!dish) {
     return {
       error: "Failed to save dish",
       fields: raw,

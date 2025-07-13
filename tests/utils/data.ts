@@ -13,7 +13,6 @@ export const generateRandomName = () => {
 };
 
 export const generateRandomPassword = () => {
-  // Generate a stronger password with mixed characters
   const randomString = generateRandomString();
   return `TestPass${randomString}123!`;
 };

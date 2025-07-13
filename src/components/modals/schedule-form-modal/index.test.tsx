@@ -8,50 +8,11 @@ vi.mock("@/auth", () => ({
   auth: vi.fn().mockResolvedValue({}),
 }));
 
-// // Mock Next.js dynamic import to return the component directly
-// vi.mock("next/dynamic", () => ({
-//   __esModule: true,
-//   default: (importFn: () => Promise<any>) => {
-//     // For the schedule form modal, return the actual component
-//     if (importFn.toString().includes("schedule-form-modal")) {
-//       return ScheduleFormModal;
-//     }
-//     // For other dynamic imports, return a simple div
-//     return () => <div>Mocked Component</div>;
-//   },
-// }));
-
-// // Mock the toast for testing
-// vi.mock("sonner", () => ({
-//   toast: {
-//     error: vi.fn(),
-//   },
-// }));
-
-// Mock the action
 vi.mock("./actions", () => ({
   handleCreateSchedule: vi.fn(),
 }));
 
-// Create a mock closeModal function to test if it's called
 const mockCloseModal = vi.fn();
-
-// Mock the useModal hook at the top level
-// vi.mock("@/lib/hooks/use-modals", () => ({
-//   useModal: () => ({
-//     modals: {
-//       scheduleForm: {
-//         id: 1,
-//       },
-//     },
-//     openModal: vi.fn(),
-//     closeModal: mockCloseModal,
-//   }),
-// }));
-
-// vi.mock("@/context/modals", () => ({
-//   ModalPropsMap: {},
-// }));
 
 test("Create restaurant", async () => {
   render(

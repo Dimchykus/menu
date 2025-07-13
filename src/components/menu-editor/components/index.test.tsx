@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { ModalProvider } from "@/context/modals";
 
-// Components to test
 import EditDishButton from "./edit-dish-button";
 import NewDishButton from "./new-dish-button";
 import NewMenuButton from "./new-menu-button";
@@ -18,7 +17,6 @@ import DeleteRestaurantButton from "./delete-restautant-button";
 import PreviewMenuButton from "./preview-menu-button";
 import { EditButton } from "./action-button";
 
-// Mock the server actions
 vi.mock("./actions", () => ({
   handleDeleteDish: vi.fn(),
   handleDeleteCategory: vi.fn(),

@@ -48,43 +48,6 @@ test("Render Menu", async () => {
   );
 });
 
-// test("Render Menu Categories", async () => {
-//   render(
-//     <MenuCategories
-//       menu={[
-//         {
-//           description: "A description",
-//           id: 1,
-//           name: "A name",
-//           restaurantId: 1,
-//           categories: [
-//             {
-//               description: "A description",
-//               id: 1,
-//               name: "A name",
-//               dishesCount: 1,
-//             },
-//           ],
-//         },
-//       ]}
-//       restaurantId={1}
-//       selectedMenu={1}
-//     />,
-//   );
-
-//   const link = screen.getByTestId("menu-category-link-1");
-
-//   expect(link).toBeInTheDocument();
-
-//   fireEvent.click(link);
-
-//   const mockElement = document.createElement("div");
-
-//   vi.spyOn(document, "getElementById").mockReturnValue(mockElement);
-
-//   fireEvent.click(link);
-// });
-
 test("Render Menu Categories - without not existing menu", async () => {
   render(
     <MenuCategories

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { FormProvider } from "react-hook-form";
-import { handleCreateMenu, MenuFormState } from "./actions";
+import { handleCreateCategory, CategoryFormState } from "./actions";
 import FormInput from "@/components/form-input";
 import { Button } from "@/components/ui/button";
 import { ModalPropsMap } from "@/context/modals";
@@ -24,12 +24,12 @@ const CategoryFormModal: React.FC<ModalPropsMap["categoryForm"]> = (props) => {
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const methods = useFormAction<MenuFormState>({
+  const methods = useFormAction<CategoryFormState>({
     extraParams: {
       menuId: props?.menuId?.toString() || "",
       id: props?.id?.toString() || "",
     },
-    onAction: handleCreateMenu,
+    onAction: handleCreateCategory,
     onSuccess: () => {
       closeModal("categoryForm");
     },
@@ -58,11 +58,12 @@ const CategoryFormModal: React.FC<ModalPropsMap["categoryForm"]> = (props) => {
   }, []);
 
   return (
-    <Dialog open>
+    <Dialog open data-testid="category-form-modal">
       <DialogContent className="sm:max-w-[425px] [&>button:first-of-type]:hidden">
         <DialogHeader>
           <DialogTitle>
-            {typeof props !== "boolean" && props?.id ? "Edit" : "Create"} menu
+            {typeof props !== "boolean" && props?.id ? "Edit" : "Create"}{" "}
+            category
           </DialogTitle>
           <DialogDescription>Enter category information</DialogDescription>
           <DialogClose
@@ -70,6 +71,7 @@ const CategoryFormModal: React.FC<ModalPropsMap["categoryForm"]> = (props) => {
             onClick={() => {
               closeModal("categoryForm");
             }}
+            data-testid="close-modal"
           >
             <Button className="absolute right-4 top-4 size-6 p-0">
               <X className="size-4" />

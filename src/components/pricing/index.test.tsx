@@ -3,12 +3,10 @@ import { render, screen } from "@testing-library/react";
 import Pricing from ".";
 import { getSubscriptionTypes } from "@/lib/db/actions/subscriptions";
 
-// Mock the subscription actions
 vi.mock("@/lib/db/actions/subscriptions", () => ({
   getSubscriptionTypes: vi.fn(),
 }));
 
-// Mock the PayButton component
 vi.mock("./pay-button", () => ({
   default: ({
     planId,
@@ -52,13 +50,4 @@ test("Pricing component renders correctly", async () => {
   ];
 
   render(await Pricing({ subscriptionTypes: mockSubscriptionTypes }));
-
-  // expect(screen.getByText("Choose Your Plan")).toBeInTheDocument();
-  // expect(screen.getByText("Basic")).toBeInTheDocument();
-  // expect(screen.getByText("Pro")).toBeInTheDocument();
-  // expect(screen.getByText("$10")).toBeInTheDocument();
-  // expect(screen.getByText("$20")).toBeInTheDocument();
-  // expect(screen.getByText("Feature 1")).toBeInTheDocument();
-  // expect(screen.getByText("Feature 2")).toBeInTheDocument();
-  // expect(screen.getByText("Feature 3")).toBeInTheDocument();
 });

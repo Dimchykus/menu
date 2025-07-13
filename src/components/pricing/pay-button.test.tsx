@@ -6,17 +6,6 @@ vi.mock("./actions", () => ({
   handleCheckout: vi.fn(),
 }));
 
-// // Mock the UI button component
-// vi.mock("../ui/button", () => ({
-//   Button: ({
-//     children,
-//     ...props
-//   }: {
-//     children: React.ReactNode;
-//     [key: string]: any;
-//   }) => <button {...props}>{children}</button>,
-// }));
-
 test("PayButton component renders correctly", () => {
   const mockProps = {
     planId: 1,

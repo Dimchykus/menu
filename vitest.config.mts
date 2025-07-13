@@ -13,11 +13,12 @@ export default defineConfig({
         "./src/app/api/**",
         "**/actions.ts",
         "./src/lib/db/**",
+        "**/db/actions/menu.ts",
+        "src/lib/db/**",
         "**/*.d.ts",
         "./src/test/**",
         "./src/auth.ts",
         "./src/middleware.ts",
-        "**/layout.tsx",
         "./src/lib/providers/**",
         "./src/icons/**",
       ],
@@ -30,7 +31,6 @@ export default defineConfig({
       "**/dist/**",
       "**/build/**",
       "tests/**", // Exclude Playwright tests
-      "tests-examples/**", // Exclude Playwright example tests
       "playwright/**",
       "**/*.spec.ts", // Exclude spec files (typically Playwright)
       "**/*.spec.tsx",

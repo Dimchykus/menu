@@ -1,7 +1,6 @@
 import { expect, test, vi } from "vitest";
 import { handleCheckout } from "./actions";
 
-// Mock external dependencies
 vi.mock("@/lib/actions/auth", () => ({
   getUser: vi.fn(),
 }));
@@ -24,7 +23,6 @@ vi.mock("sonner", () => ({
   },
 }));
 
-// Mock global fetch
 global.fetch = vi.fn();
 
 test("handleCheckout function exists and is callable", () => {

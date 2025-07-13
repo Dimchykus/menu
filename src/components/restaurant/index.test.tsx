@@ -2,6 +2,7 @@ import { expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import Restaurant from ".";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { SelectSchedule } from "@/lib/db/schema/menu";
 
 vi.mock("@/auth", () => ({
   auth: vi.fn().mockResolvedValue({}),
@@ -48,7 +49,9 @@ test("renders Restaurant", async () => {
         },
         {
           close: "00:00",
-          dayOfWeek: new Date().toLocaleString("en-US", { weekday: "long" }), // current day
+          dayOfWeek: new Date().toLocaleString("en-US", {
+            weekday: "long",
+          }) as SelectSchedule["dayOfWeek"],
           id: 1,
           open: "23:59",
           restaurantId: 1,
