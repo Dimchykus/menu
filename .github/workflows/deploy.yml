@@ -21,6 +21,8 @@ jobs:
       - name: Test
         run: npm run test
       - name: Run db push
+        env:
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
         run: npm run db:push
       - name: Install Vercel CLI
         run: npm install --global vercel
