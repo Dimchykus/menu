@@ -14,9 +14,7 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        const baseUrl =
-          process.env.NEXT_PUBLIC_API_BASE_URL ||
-          "http://localhost:3000/api/signin";
+        const baseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/signin`;
         const res: Response = await fetch(baseUrl, {
           method: "POST",
           headers: {
@@ -37,6 +35,8 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
   ],
   callbacks: {
     jwt: async ({ token, user, trigger, session }) => {
+      console.log("jwt", token, user, trigger, session);
+
       if (user) {
         token.user = user;
       }
