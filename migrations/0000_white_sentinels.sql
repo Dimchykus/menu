@@ -1,4 +1,8 @@
-CREATE TYPE "public"."duration_unit" AS ENUM('day', 'week', 'month', 'year');--> statement-breakpoint
+DO $$ BEGIN
+  CREATE TYPE "public"."duration_unit" AS ENUM('day', 'week', 'month', 'year');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
 CREATE TABLE "dishes" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"category_id" integer NOT NULL,
@@ -59,7 +63,8 @@ CREATE TABLE "subscriptions" (
 	"payment_currency" text NOT NULL,
 	"payment_date" timestamp NOT NULL,
 	"payment_type" text NOT NULL,
-	"created_at" timestamp DEFAULT now()
+	"created_at" timestamp DEFAULT now(),
+	CONSTRAINT "subscriptions_payment_id_unique" UNIQUE("payment_id")
 );
 --> statement-breakpoint
 CREATE TABLE "subscription_type_abilities" (

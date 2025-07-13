@@ -1,5 +1,5 @@
 {
-  "id": "ed4f2cbf-71ab-412d-b834-35c8eb367d03",
+  "id": "1a894267-5d8f-4c2b-9c58-6557fb8677c5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -453,7 +453,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "subscriptions_payment_id_unique": {
+          "name": "subscriptions_payment_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "payment_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
