@@ -2,7 +2,7 @@ import { expect, test, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ModalProvider } from "@/context/modals";
 import ModalContainer from "@/views/modals";
-import { getAllMenuData, handleUpdateMenuOrder } from "./actions";
+import { getAllMenuData } from "./actions";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 vi.mock("@/auth", () => ({

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { expect, test, vi, beforeEach } from "vitest";
 import { login, signup, logout, getUser } from "./auth";
 import { getImages, getImage, createImage } from "./images";

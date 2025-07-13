@@ -18,7 +18,6 @@ import { X } from "lucide-react";
 import { getMenuById } from "@/lib/db/actions/menu";
 import { Menu } from "@/lib/db/schema/menu";
 import useFormAction from "@/lib/hooks/use-form-action";
-import { Label } from "@/components/ui/label";
 
 const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
   const { closeModal } = useModal();

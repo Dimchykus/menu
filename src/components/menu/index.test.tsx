@@ -1,9 +1,9 @@
-import { expect, test, vi } from "vitest";
+import { test, vi } from "vitest";
 import Menu from "./";
 import MenuCategories from "./menu-categories";
 import MenuDishes from "./menu-dishes";
 import MenuCategoryDishes from "./menu-category-dishes";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { getCategoryDishes } from "@/lib/db/actions/menu";
 
 vi.mock("@/lib/actions/auth", () => ({

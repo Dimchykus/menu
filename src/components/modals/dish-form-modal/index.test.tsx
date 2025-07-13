@@ -3,7 +3,6 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ModalProvider } from "@/context/modals";
 import ModalContainer from "@/views/modals";
 import { getDishById } from "@/lib/db/actions/menu";
-import { handleUpdateDish } from "./actions";
 import DishFormModal from ".";
 
 vi.mock("@/auth", () => ({

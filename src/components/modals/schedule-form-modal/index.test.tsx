@@ -1,5 +1,5 @@
 import { expect, test, vi } from "vitest";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import ScheduleFormModal from ".";
 import { ModalProvider } from "@/context/modals";
 import ModalContainer from "@/views/modals";
@@ -11,8 +11,6 @@ vi.mock("@/auth", () => ({
 vi.mock("./actions", () => ({
   handleCreateSchedule: vi.fn(),
 }));
-
-const mockCloseModal = vi.fn();
 
 test("Create restaurant", async () => {
   render(

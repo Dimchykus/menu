@@ -1,6 +1,6 @@
-import { expect, test, vi } from "vitest";
+import { test, vi } from "vitest";
 import HomePage from "./page";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
 vi.mock("@/auth", () => ({
   auth: vi.fn().mockResolvedValue({}),

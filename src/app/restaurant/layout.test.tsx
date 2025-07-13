@@ -1,7 +1,6 @@
 import { expect, test, vi } from "vitest";
 import Layout from "./layout";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { render, screen } from "@testing-library/react";
 
 vi.mock("@/auth", () => ({
   auth: vi.fn().mockResolvedValue({}),

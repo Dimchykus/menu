@@ -241,7 +241,9 @@ describe("Menu Editor Components", () => {
       const onClick = vi.fn();
 
       render(
-        <EditButton onClick={onClick} size="default" children="Custom Text" />,
+        <EditButton onClick={onClick} size="default">
+          Custom Text
+        </EditButton>,
       );
 
       const button = screen.getByTitle("Custom Text");

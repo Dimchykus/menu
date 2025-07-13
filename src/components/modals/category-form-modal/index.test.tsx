@@ -3,7 +3,6 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ModalProvider } from "@/context/modals";
 import ModalContainer from "@/views/modals";
 import { getCategoryById } from "@/lib/db/actions/menu";
-import { handleCreateCategory } from "./actions";
 
 vi.mock("@/auth", () => ({
   auth: vi.fn().mockResolvedValue({}),

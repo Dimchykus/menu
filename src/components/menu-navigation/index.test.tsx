@@ -1,7 +1,6 @@
-import { expect, test, vi } from "vitest";
+import { test, vi } from "vitest";
 import MenuNavigation from "./";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { getCategoryDishes } from "@/lib/db/actions/menu";
+import { render } from "@testing-library/react";
 import { SidebarProvider } from "../ui/sidebar";
 
 vi.mock("@/lib/actions/auth", () => ({

@@ -1,5 +1,5 @@
-import { expect, test, vi } from "vitest";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { expect, test } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
 import ThemeDropdownButton from "./drop-down-button";
 import { DropdownMenu, DropdownMenuContent } from "../ui/dropdown-menu";
 import { ThemeProvider } from "../../lib/providers/theme";

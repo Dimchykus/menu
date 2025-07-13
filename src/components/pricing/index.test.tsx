@@ -1,5 +1,5 @@
-import { expect, test, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import {  test, vi } from "vitest";
+import { render } from "@testing-library/react";
 import Pricing from ".";
 import { getSubscriptionTypes } from "@/lib/db/actions/subscriptions";
 

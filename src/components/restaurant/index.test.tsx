@@ -1,7 +1,6 @@
 import { expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import Restaurant from ".";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { SelectSchedule } from "@/lib/db/schema/menu";
 
 vi.mock("@/auth", () => ({

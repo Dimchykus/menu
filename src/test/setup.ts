@@ -31,7 +31,7 @@ vi.mock("@/auth", () => ({
 
 vi.mock("embla-carousel-react", () => ({
   default: () => [
-    (element: HTMLElement | null) => {},
+    () => {},
     {
       canScrollPrev: () => false,
       canScrollNext: () => false,
