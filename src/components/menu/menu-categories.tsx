@@ -29,6 +29,7 @@ const MenuCategories = ({ menu, restaurantId, selectedMenu }: Props) => {
             >
               <Link
                 href={`/restaurant/${restaurantId}/menu/${selectedMenu}#category-${category.id}`}
+                data-testid={`menu-category-link-${category.id}`}
                 className="block group bg-card hover:bg-accent/50 rounded-xl p-2 sm:p-4 border border-border transition-colors"
                 onClick={() => {
                   const categoryBlock = document.getElementById(

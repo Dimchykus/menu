@@ -14,6 +14,8 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const schedule = await getSchedule(restaurantId);
   const menus = await getRestaurantMenu(restaurantId);
 
+  console.log("-----restaurant", restaurant);
+
   if (!restaurant) {
     redirect("/restaurants");
 

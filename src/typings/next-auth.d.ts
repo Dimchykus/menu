@@ -20,11 +20,6 @@ declare module "next-auth" {
   interface Session {
     token?: string;
     id?: number;
-    isOidc: boolean;
-    roles: ApiUser["roles"];
-    project: ApiUser["project"];
-    passwordUpdatedAt: string | null;
-    isPasswordReset: boolean;
     refreshToken?: string;
   }
 }

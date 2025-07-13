@@ -138,6 +138,7 @@ const ScheduleFormModal: React.FC<Props> = ({ id }) => {
             </DialogDescription>
             <DialogClose
               asChild
+              data-testid="close-button"
               onClick={() => {
                 closeModal("scheduleForm");
               }}
@@ -157,6 +158,7 @@ const ScheduleFormModal: React.FC<Props> = ({ id }) => {
                     <div className="flex flex-1 justify-center gap-2 items-center">
                       <FormInput
                         name={`${day.toLowerCase()}.start`}
+                        dataTestId={`${day.toLowerCase()}.start`}
                         className="w-[64px]"
                         type="time"
                         value={watch(`${day.toLowerCase()}.start`)}
@@ -170,6 +172,7 @@ const ScheduleFormModal: React.FC<Props> = ({ id }) => {
                       <p>-</p>
                       <FormInput
                         name={`${day.toLowerCase()}.close`}
+                        dataTestId={`${day.toLowerCase()}.close`}
                         className="w-[64px]"
                         type="time"
                         value={watch(`${day.toLowerCase()}.close`)}
@@ -185,7 +188,14 @@ const ScheduleFormModal: React.FC<Props> = ({ id }) => {
                 ))}
               </div>
               <DialogFooter className="mt-6">
-                <Button variant="outline">Cancel</Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    closeModal("scheduleForm");
+                  }}
+                >
+                  Cancel
+                </Button>
                 <Button type="submit" disabled={pending}>
                   Save
                 </Button>

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { FormProvider } from "react-hook-form";
-import { handleCreateMenu } from "./actions";
+import { handleUpdateDish } from "./actions";
 import FormInput from "@/components/form-input";
 import { Button } from "@/components/ui/button";
 import { ModalPropsMap } from "@/context/modals";
@@ -44,7 +44,7 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
       price: 0,
     },
     resolver: zodResolver(menuSchema),
-    onAction: handleCreateMenu,
+    onAction: handleUpdateDish,
     onSuccess: () => {
       closeModal("dishForm");
     },
@@ -80,8 +80,10 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
 
   const [name, description, price] = watch(["name", "description", "price"]);
 
+  console.log("--------errors", errors);
+
   return (
-    <Dialog open>
+    <Dialog open data-testid="modal">
       <DialogContent className="sm:max-w-[425px] [&>button:first-of-type]:hidden">
         <DialogHeader>
           <DialogTitle>
@@ -93,6 +95,7 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
             onClick={() => {
               closeModal("dishForm");
             }}
+            data-testid="close-button"
           >
             <Button className="absolute right-4 top-4 size-6 p-0">
               <X className="size-4" />
@@ -120,7 +123,10 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
               accept="image/png, image/gif, image/jpeg"
             />
             {Object.keys(errors || {}).length > 0 && (
-              <div className="text-red-500 text-sm space-y-1">
+              <div
+                className="text-red-500 text-sm space-y-1"
+                data-testid="error-messages"
+              >
                 {Object.entries(errors || {}).map(([field, error]) => (
                   <p key={field}>
                     {field.charAt(0).toUpperCase() + field.slice(1)}:{" "}
