@@ -14,7 +14,8 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        const baseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/signin`;
+        const baseUrl = `${process.env.NEXT_PUBLIC_URL}/api/signin`;
+
         const res: Response = await fetch(baseUrl, {
           method: "POST",
           headers: {

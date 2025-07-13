@@ -2,7 +2,7 @@
 
 import { auth, signIn, signOut } from "../../auth";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
 
 export const login = async (formData: FormData) => {
   await signIn("credentials", formData);
