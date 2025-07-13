@@ -20,6 +20,8 @@ jobs:
         run: npm install -g pnpm && pnpm install
       - name: Test
         run: npm run test
+      - name: Run db push
+        run: npm run db:push
       - name: Install Vercel CLI
         run: npm install --global vercel
       - name: Deploy to Vercel
