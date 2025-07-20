@@ -12,7 +12,7 @@ export default async function Page() {
     <div className="min-h-screen">
       <Header session={session} />
       <HeroSection />
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50" id="features">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">
             Why Choose Digital Menus
@@ -51,7 +51,7 @@ export default async function Page() {
         </div>
       </section>
       <Pricing subscriptionTypes={subscriptionTypes} />
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50" id="faq">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">
             Frequently Asked Questions
@@ -107,17 +107,17 @@ export default async function Page() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
+                  <a href="#features" className="text-gray-400 hover:text-white">
                     Features
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
+                  <a href="#pricing" className="text-gray-400 hover:text-white">
                     Pricing
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
+                  <a href="#faq" className="text-gray-400 hover:text-white">
                     FAQ
                   </a>
                 </li>
