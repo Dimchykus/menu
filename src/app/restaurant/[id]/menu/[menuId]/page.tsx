@@ -18,10 +18,6 @@ export default async function Page(props: {
   const restaurant = await getRestaurantById(restaurantId);
   const menu = await getRestaurantMenusWithCategories(restaurantId);
 
-  console.log("searchParams", searchParams);
-
-  console.log({ menu });
-
   if (!restaurant || !menu) {
     notFound();
   }
