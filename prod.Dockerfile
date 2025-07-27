@@ -64,4 +64,6 @@ ENV AUTH_SECRET=${AUTH_SECRET}
 
 # Note: Don't expose ports here, Compose will handle that for us
 
+EXPOSE 3000
+
 CMD ["node", "server.js"]
