@@ -1,4 +1,4 @@
-import stripe from "@/lib/stripe";
+import getStripe from "@/lib/stripe";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -10,12 +10,7 @@ export async function POST(request: NextRequest) {
       productName: string;
     } = await request.json();
 
-    if (!stripe) {
-      return NextResponse.json(
-        { error: "Stripe is not initialized" },
-        { status: 500 },
-      );
-    }
+    const stripe = getStripe();
 
     console.log(
       "url",

@@ -76,7 +76,7 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
         price: 0,
       });
     };
-  }, []);
+  }, [props?.id, reset]);
 
   const [name, description, price] = watch(["name", "description", "price"]);
 

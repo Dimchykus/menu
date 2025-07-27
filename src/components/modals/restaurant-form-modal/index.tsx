@@ -63,7 +63,7 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
         phone: "",
       });
     };
-  }, []);
+  }, [props?.id]);
 
   return (
     <Dialog open>

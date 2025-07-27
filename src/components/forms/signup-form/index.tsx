@@ -1,32 +1,42 @@
 "use client";
 
 import { handleSignUp } from "./actions";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import FormInput from "@/components/form-input";
 import { Checkbox } from "@/components/ui/checkbox";
 import GitHubAuth from "@/components/sso/github";
 import Link from "next/link";
+import useFormAction from "@/lib/hooks/use-form-action";
 
 const SignupForm = () => {
-  const methods = useForm();
+  const methods = useFormAction({ onAction: handleSignUp });
 
   return (
     <div>
       <FormProvider {...methods}>
         <div className="p-8 bg-slate-800/90 backdrop-blur-xl border border-slate-700/50 rounded-3xl flex flex-col items-stretch shadow-2xl">
-          <form action={handleSignUp}>
+          <form action={methods.handleAction}>
             <div className="w-[380px] flex flex-col m-auto">
               <h2 className="text-3xl text-center mb-8 font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 Create Account
               </h2>
               <div className="gap-5 flex flex-col mb-6">
-                <FormInput name="name" placeholder="Full Name" />
-                <FormInput name="email" placeholder="Email Address" />
+                <FormInput
+                  name="name"
+                  placeholder="Full Name"
+                  className="text-white"
+                />
+                <FormInput
+                  name="email"
+                  placeholder="Email Address"
+                  className="text-white"
+                />
                 <FormInput
                   name="password"
                   type="password"
                   placeholder="Password"
+                  className="text-white"
                 />
               </div>
               <div className="flex items-center space-x-3 mb-6">

@@ -2,7 +2,7 @@
 
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import stripe from "@/lib/stripe";
+import getStripe from "@/lib/stripe";
 import {
   checkIfPaymentExists,
   createSubscription,
@@ -34,6 +34,7 @@ export const handleSaveSubscription = async (
         notFound: true,
       };
     }
+    const stripe = getStripe();
     const stripeSession = await stripe.checkout.sessions.retrieve(sessionId, {
       expand: ["line_items.data.price.product"],
     });

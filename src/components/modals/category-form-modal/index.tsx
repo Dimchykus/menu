@@ -55,7 +55,7 @@ const CategoryFormModal: React.FC<ModalPropsMap["categoryForm"]> = (props) => {
         description: "",
       });
     };
-  }, []);
+  }, [props?.id, reset]);
 
   return (
     <Dialog open data-testid="category-form-modal">

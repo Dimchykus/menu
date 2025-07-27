@@ -27,6 +27,7 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
         const user = await res.json();
 
         return {
+          id: user.data.id.toString(),
           userId: user.data.id,
           email: user.data.email,
           name: user.data.name,

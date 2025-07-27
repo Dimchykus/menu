@@ -55,7 +55,7 @@ const MenuFormModal: React.FC<ModalPropsMap["menuForm"]> = (props) => {
         description: "",
       });
     };
-  }, []);
+  }, [props?.id, reset]);
 
   return (
     <Dialog open>

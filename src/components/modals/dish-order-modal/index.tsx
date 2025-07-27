@@ -58,7 +58,7 @@ const DishOrderModal = () => {
 
   useEffect(() => {
     mutate();
-  }, []);
+  }, [mutate]);
 
   if (!groupedData || isPending) {
     return (

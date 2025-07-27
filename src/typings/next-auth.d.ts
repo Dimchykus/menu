@@ -1,4 +1,4 @@
-import { type DefaultSession, User as SessionUser } from "next-auth";
+import { User as SessionUser } from "next-auth";
 
 // eslint-disable-next-line
 import { JWT } from "next-auth/jwt";
@@ -13,7 +13,11 @@ declare module "next-auth/jwt" {
 }
 
 declare module "next-auth" {
-  interface User extends DefaultSession["user"] {
+  interface User {
+    id: string;
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
     userId: number;
   }
 

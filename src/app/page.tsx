@@ -107,7 +107,10 @@ export default async function Page() {
                   </a>
                 </li>
                 <li>
-                  <a href="#features" className="text-gray-400 hover:text-white">
+                  <a
+                    href="#features"
+                    className="text-gray-400 hover:text-white"
+                  >
                     Features
                   </a>
                 </li>

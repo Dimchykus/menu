@@ -1,0 +1,70 @@
+services:
+  nextjs-app:
+    image: menu-app
+    container_name: menu-app
+    env_file:
+      - ./.env.production
+    build:
+      context: .
+      dockerfile: prod.Dockerfile
+      args:
+        POSTGRES_URL: ${POSTGRES_URL}
+        AUTH_SECRET: ${AUTH_SECRET}
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - postgres-network
+
+  db:
+    image: postgres:17
+    container_name: menu-db
+    restart: always
+    environment:
+      PGPASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - postgres-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d mydb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  adminer:
+    image: adminer
+    container_name: menu-adminer
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    ports:
+      - 8080:8080
+    networks:
+      - postgres-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - nextjs-app
+    networks:
+      - postgres-network
+
+networks:
+  postgres-network:
+    driver: bridge
+
+volumes:
+  node_modules:
+  build:
+  pgdata:
