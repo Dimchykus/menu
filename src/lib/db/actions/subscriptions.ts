@@ -9,7 +9,10 @@ import {
 import { eq, desc, gt, and } from "drizzle-orm";
 
 export const getSubscriptionTypes = async () => {
-  const subscriptions = await db.select().from(subscriptionTypeTable);
+  const subscriptions = await db
+    .select()
+    .from(subscriptionTypeTable)
+    .where(eq(subscriptionTypeTable.disabled, false));
 
   return subscriptions;
 };

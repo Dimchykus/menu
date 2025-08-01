@@ -1,6 +1,7 @@
 "use server";
 
 import { createRestaurant, updateRestaurant } from "@/lib/db/actions/menu";
+import { checkSubscriptionLimit } from "@/lib/actions/menu";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -36,6 +37,18 @@ export const handleCreateRestaurant = async (
   }
 
   const { id, ...data } = parsed.data;
+
+  if (!id) {
+    const limitCheck = await checkSubscriptionLimit("restaurant");
+
+    if (!limitCheck.success) {
+      return {
+        success: false,
+        error: limitCheck.error,
+        fieldErrors: {},
+      };
+    }
+  }
 
   const restaurant = id
     ? await updateRestaurant(parseInt(id), data)

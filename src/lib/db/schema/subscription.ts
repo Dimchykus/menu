@@ -5,6 +5,7 @@ import {
   text,
   timestamp,
   pgEnum,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm/relations";
 import { userTable } from "./user";
@@ -27,6 +28,7 @@ export const subscriptionTypeTable = pgTable("subscription_type", {
   subscriptionTypeAbilitiesId: integer("subscription_type_abilities_id")
     .notNull()
     .references(() => subscriptionTypeAbilitiesTable.id),
+  disabled: boolean("disabled").notNull().default(false),
 });
 
 export const subscriptionTypeTableRelations = relations(

@@ -6,8 +6,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("-----children", children);
-
   return (
     <SidebarProvider className="flex flex-col">
       <Header />

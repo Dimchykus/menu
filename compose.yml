@@ -1,6 +1,6 @@
 services:
   nextjs-app:
-    image: dimchykus/menu-app
+    image: menu-app
     container_name: menu-app
     env_file:
       - ./.env.production

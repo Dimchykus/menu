@@ -8,6 +8,13 @@
       "when": 1752426149979,
       "tag": "0000_white_sentinels",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1753994392099,
+      "tag": "0001_slow_wilson_fisk",
+      "breakpoints": true
     }
   ]
 }

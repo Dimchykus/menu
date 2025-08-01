@@ -80,8 +80,6 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
 
   const [name, description, price] = watch(["name", "description", "price"]);
 
-  console.log("--------errors", errors);
-
   return (
     <Dialog open data-testid="modal">
       <DialogContent className="sm:max-w-[425px] [&>button:first-of-type]:hidden">

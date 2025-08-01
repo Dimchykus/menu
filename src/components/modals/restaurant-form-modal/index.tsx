@@ -17,6 +17,7 @@ import Form from "next/form";
 import { handleCreateRestaurant } from "./actions";
 import { ModalPropsMap } from "@/context/modals";
 import { getRestaurantById } from "@/lib/db/actions/menu";
+import { toast } from "sonner";
 
 const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
   props,
@@ -32,7 +33,7 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
   const [state, formAction, pending] = useActionState(handleCreateRestaurant, {
     success: false,
     restaurant: null,
-    error: "1",
+    error: "",
   });
 
   useEffect(() => {
@@ -40,6 +41,12 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
       closeModal("restaurantForm");
     }
   }, [state.success, closeModal]);
+
+  useEffect(() => {
+    if (state.error) {
+      toast.error(state.error);
+    }
+  }, [state]);
 
   useEffect(() => {
     if (props?.id) {
@@ -157,11 +164,6 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
               />
             </div>
           </div>
-          {(state?.fieldErrors?.name || state?.fieldErrors?.description) && (
-            <p className="text-red-700 text-sm mb-2">
-              {state?.fieldErrors?.name || state?.fieldErrors?.description}
-            </p>
-          )}
           <DialogFooter>
             <Button type="submit" disabled={pending}>
               {typeof props !== "boolean" && props?.id ? "Update" : "Create"}
