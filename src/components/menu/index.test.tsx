@@ -5,6 +5,7 @@ import MenuDishes from "./menu-dishes";
 import MenuCategoryDishes from "./menu-category-dishes";
 import { render } from "@testing-library/react";
 import { getCategoryDishes } from "@/lib/db/actions/menu";
+import { ModalProvider } from "@/context/modals";
 
 vi.mock("@/lib/actions/auth", () => ({
   logout: vi.fn(),
@@ -88,13 +89,13 @@ test("Render Menu Dishes", async () => {
     },
   ]);
 
-  render(await MenuDishes({ categoryId: 1 }));
+  render(<ModalProvider>{await MenuDishes({ categoryId: 1 })}</ModalProvider>);
 });
 
 test("Render Menu Dishes - without dishes", async () => {
   vi.mocked(getCategoryDishes).mockResolvedValue([]);
 
-  render(await MenuDishes({ categoryId: 1 }));
+  render(<ModalProvider>{await MenuDishes({ categoryId: 1 })}</ModalProvider>);
 });
 
 test("Render Menu Category Dishes - without menu", async () => {

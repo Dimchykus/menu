@@ -9,6 +9,7 @@ export interface ModalPropsMap {
   dishForm?: { id?: number; categoryId?: number };
   scheduleForm?: { id: number };
   dishOrder?: boolean;
+  dishAiCalories?: { dishId?: number };
 }
 
 type ModalKey = keyof ModalPropsMap;

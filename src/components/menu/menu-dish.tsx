@@ -1,5 +1,6 @@
 import { Dish } from "@/lib/db/schema/menu";
 import Image from "next/image";
+import AiCaloriesButton from "./ai-calories-button";
 
 interface Props {
   dish: Dish;
@@ -8,7 +9,6 @@ interface Props {
 const MenuDish = ({ dish }: Props) => {
   return (
     <div className="group relative overflow-hidden rounded-lg bg-white p-4 shadow-md transition-all hover:shadow-lg">
-      {/* {dish.image && ( */}
       <div className="relative mb-3 h-48 w-full overflow-hidden rounded-lg">
         <Image
           src={
@@ -20,6 +20,7 @@ const MenuDish = ({ dish }: Props) => {
           width={300}
           height={192}
         />
+        <AiCaloriesButton dishId={dish.id} />
       </div>
       {/* )} */}
       <h3 className="mb-2 text-lg font-semibold text-gray-800">{dish.name}</h3>

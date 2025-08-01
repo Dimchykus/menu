@@ -22,6 +22,9 @@ const DishFormModal = dynamic(
 const DishOrderModal = dynamic(
   () => import("@/components/modals/dish-order-modal"),
 );
+const DishAiCaloriesModal = dynamic(
+  () => import("@/components/modals/dish-ai-calories-modal"),
+);
 
 const ModalContainer = () => {
   const { modals } = useModal();
@@ -36,6 +39,9 @@ const ModalContainer = () => {
       {modals.categoryForm && <CategoryFormModal {...modals.categoryForm} />}
       {modals.dishForm && <DishFormModal {...modals.dishForm} />}
       {modals.dishOrder && <DishOrderModal />}
+      {modals.dishAiCalories && (
+        <DishAiCaloriesModal {...modals.dishAiCalories} />
+      )}
     </Suspense>
   );
 };
