@@ -164,6 +164,13 @@ const RestaurantFormModal: React.FC<ModalPropsMap["restaurantForm"]> = (
               />
             </div>
           </div>
+          {state?.fieldErrors &&
+            ("name" in state?.fieldErrors ||
+              "description" in state?.fieldErrors) && (
+              <p className="text-red-700 text-sm mb-2">
+                {state?.fieldErrors?.name || state?.fieldErrors?.description}
+              </p>
+            )}
           <DialogFooter>
             <Button type="submit" disabled={pending}>
               {typeof props !== "boolean" && props?.id ? "Update" : "Create"}
