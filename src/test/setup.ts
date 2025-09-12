@@ -62,3 +62,13 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
   unobserve: vi.fn(),
   disconnect: vi.fn(),
 }));
+
+global.BroadcastChannel = vi.fn().mockImplementation(() => ({
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+  dispatchEvent: vi.fn(),
+  postMessage: vi.fn(),
+  close: vi.fn(),
+  onmessage: null,
+  onmessageerror: null,
+}));

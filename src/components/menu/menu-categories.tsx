@@ -25,14 +25,11 @@ const MenuCategories = ({ menu, restaurantId, selectedMenu }: Props) => {
         <Carousel>
           <CarouselContent className="p-4">
             {selectedMenuData.categories?.map((category) => (
-              <CarouselItem
-                key={category.id}
-                className="basis-[250px] sm:basis-[300px]"
-              >
+              <CarouselItem key={category.id} className="basis-[300px]">
                 <Link
                   href={`/restaurant/${restaurantId}/menu/${selectedMenu}#category-${category.id}`}
                   data-testid={`menu-category-link-${category.id}`}
-                  className="block group bg-card hover:bg-accent/50 rounded-xl p-2 sm:p-4 border border-border transition-colors"
+                  className="flex items-center justify-center group bg-card hover:bg-accent/50 rounded-xl p-2 sm:p-4 border border-border transition-colors h-full"
                   onClick={() => {
                     const categoryBlock = document.getElementById(
                       `category-${category.id}`,
@@ -52,7 +49,7 @@ const MenuCategories = ({ menu, restaurantId, selectedMenu }: Props) => {
                       <Utensils className="w-6 h-6" />
                     </div>
                     <div className="self-center flex-1 flex justify-between sm:flex-col">
-                      <h3 className="font-medium text-lg mb-2 text-ellipsis overflow-hidden">
+                      <h3 className="font-medium text-lg text-ellipsis overflow-hidden">
                         {category.name}
                       </h3>
                       <div className="flex items-center gap-2">

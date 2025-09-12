@@ -25,7 +25,7 @@ const menuSchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
   price: z.coerce.number().min(0, "Min price is 0"),
-  // image: z.instanceof(File).optional(),
+  image: z.instanceof(File).optional(),
 });
 
 export type MenuFormState = z.infer<typeof menuSchema>;
@@ -52,7 +52,6 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
 
   const {
     reset,
-    formState: { errors },
     watch,
   } = methods;
 
@@ -120,19 +119,6 @@ const DishFormModal: React.FC<ModalPropsMap["dishForm"]> = (props) => {
               title="Image"
               accept="image/png, image/gif, image/jpeg"
             />
-            {Object.keys(errors || {}).length > 0 && (
-              <div
-                className="text-red-500 text-sm space-y-1"
-                data-testid="error-messages"
-              >
-                {Object.entries(errors || {}).map(([field, error]) => (
-                  <p key={field}>
-                    {field.charAt(0).toUpperCase() + field.slice(1)}:{" "}
-                    {error.message}
-                  </p>
-                ))}
-              </div>
-            )}
             <DialogFooter>
               <Button type="submit">
                 {typeof props !== "boolean" && props?.id ? "Update" : "Create"}

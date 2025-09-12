@@ -12,7 +12,7 @@ import {
   menuCategoryTable,
   dishTable,
 } from "@/lib/db/schema/menu";
-import { getUser } from "@/lib/actions/auth";
+import { getSessionUser } from "@/lib/actions/auth";
 import { eq, and, count, gt } from "drizzle-orm";
 
 export type EntityType = "restaurant" | "menu" | "category" | "dish" | "table";
@@ -41,7 +41,7 @@ export async function checkSubscriptionLimit(
   entityType: EntityType,
 ): Promise<SubscriptionLimitResult> {
   try {
-    const user = await getUser();
+    const user = await getSessionUser();
 
     // Get user's active subscription with abilities
     const userSubscription = await db
@@ -259,7 +259,7 @@ export async function checkSubscriptionLimit(
  */
 export async function getUserUsageStats() {
   try {
-    const user = await getUser();
+    const user = await getSessionUser();
 
     const [restaurantCount] = await db
       .select({ count: count() })
@@ -324,7 +324,7 @@ export async function getUserUsageStats() {
  */
 export async function getUserSubscriptionLimits() {
   try {
-    const user = await getUser();
+    const user = await getSessionUser();
 
     const userSubscription = await db
       .select({

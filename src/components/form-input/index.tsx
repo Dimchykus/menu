@@ -9,7 +9,11 @@ interface Props extends React.ComponentProps<"input"> {
 }
 
 const FormInput: React.FC<Props> = ({ name, title, dataTestId, ...props }) => {
-  const { register } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+  const error = errors[name];
 
   return (
     <div>
@@ -22,8 +26,14 @@ const FormInput: React.FC<Props> = ({ name, title, dataTestId, ...props }) => {
         {...register(name)}
         id={name}
         data-testid={dataTestId}
+        className={`${props.className || ""} ${
+          error ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""
+        }`}
         {...props}
       />
+      {error && (
+        <p className="text-red-500 text-sm mt-1">{error.message as string}</p>
+      )}
     </div>
   );
 };

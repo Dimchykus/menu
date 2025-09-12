@@ -17,13 +17,13 @@ import {
   Category,
   Dish,
 } from "../schema/menu";
-import { getUser } from "@/lib/actions/auth";
+import { getSessionUser } from "@/lib/actions/auth";
 import { eq, and, sql, getTableColumns, asc } from "drizzle-orm";
 import { getImage } from "@/lib/actions/images";
 
 export const createRestaurant = async (data: NewRestaurant) => {
   try {
-    const user = await getUser();
+    const user = await getSessionUser();
 
     const restaurant = await db
       .insert(restaurantTable)
@@ -40,7 +40,7 @@ export const createRestaurant = async (data: NewRestaurant) => {
 
 export const updateRestaurant = async (id: number, data: NewRestaurant) => {
   try {
-    const user = await getUser();
+    const user = await getSessionUser();
 
     const restaurant = await db
       .update(restaurantTable)
@@ -227,7 +227,7 @@ export const getCategoryDishes = async (id: MenuCategory["id"]) => {
 };
 
 export const getUserEditRestaurants = async () => {
-  const user = await getUser();
+  const user = await getSessionUser();
 
   const restaurants = await db
     .select({
@@ -247,7 +247,7 @@ export type UserEditRestaurants = Awaited<
 >;
 
 export const getUserEditMenus = async (restaurantId: Restaurant["id"]) => {
-  await getUser();
+  await getSessionUser();
 
   const menus = await db
     .select({
@@ -265,7 +265,7 @@ export const getUserEditMenus = async (restaurantId: Restaurant["id"]) => {
 export type UserEditMenus = Awaited<ReturnType<typeof getUserEditMenus>>;
 
 export const getUserEditCategories = async (menuId: Menu["id"]) => {
-  await getUser();
+  await getSessionUser();
 
   const categories = await db
     .select()
@@ -280,7 +280,7 @@ export type UserEditCategories = Awaited<
 >;
 
 export const getUserEditDishes = async (categoryId: MenuCategory["id"]) => {
-  await getUser();
+  await getSessionUser();
 
   const dishes = await db
     .select()
@@ -319,7 +319,7 @@ export const deleteDish = async (id: Dish["id"]) => {
 
 export const updateMenu = async (id: number, data: InsertMenu) => {
   try {
-    await getUser();
+    await getSessionUser();
 
     const menu = await db
       .update(menuTable)
@@ -354,7 +354,7 @@ export const getMenuById = async (id: Menu["id"]) => {
 
 export const updateCategory = async (id: number, data: InsertCategory) => {
   try {
-    await getUser();
+    await getSessionUser();
 
     const categories = await db
       .update(menuCategoryTable)
@@ -389,7 +389,7 @@ export const getCategoryById = async (id: Category["id"]) => {
 
 export const updateDish = async (id: number, data: InsertDish) => {
   try {
-    await getUser();
+    await getSessionUser();
 
     const dishes = await db
       .update(dishTable)
@@ -409,7 +409,7 @@ export const updateDish = async (id: number, data: InsertDish) => {
 
 export const updateDishOrder = async (dishId: number, newOrder: number) => {
   try {
-    await getUser();
+    await getSessionUser();
 
     const dish = await db
       .update(dishTable)
@@ -426,7 +426,7 @@ export const updateDishOrder = async (dishId: number, newOrder: number) => {
 
 export const updateMenuOrder = async (menuId: number, newOrder: number) => {
   try {
-    await getUser();
+    await getSessionUser();
 
     const menu = await db
       .update(menuTable)
@@ -446,7 +446,7 @@ export const updateCategoryOrder = async (
   newOrder: number,
 ) => {
   try {
-    await getUser();
+    await getSessionUser();
 
     const category = await db
       .update(menuCategoryTable)
@@ -463,7 +463,7 @@ export const updateCategoryOrder = async (
 
 export const getAllUserDishesWithHierarchy = async () => {
   try {
-    const user = await getUser();
+    const user = await getSessionUser();
 
     const data = await db
       .select({

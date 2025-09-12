@@ -1,14 +1,15 @@
+import { getUser } from "@/lib/actions/auth";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 const MenuEditor = dynamic(() => import("@/components/menu-editor"));
 const ProfileUserInfo = dynamic(() => import("@/components/profile-user-info"));
 
-export default function Page() {
+export default async function Page() {
+  const user = await getUser();
+
   return (
     <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProfileUserInfo />
-      </Suspense>
+      <ProfileUserInfo user={user} />
       <Suspense fallback={<div>Loading...</div>}>
         <MenuEditor />
       </Suspense>

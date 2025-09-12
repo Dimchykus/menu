@@ -1,6 +1,7 @@
 "use server";
 
 import { auth, signIn, signOut } from "../../auth";
+import { getUserById } from "../db/actions/user";
 
 const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
 
@@ -34,7 +35,7 @@ export const logout = async () => {
   await signOut({ redirectTo: "/signin" });
 };
 
-export const getUser = async () => {
+export const getSessionUser = async () => {
   const session = await auth();
 
   if (!session?.user) {
@@ -42,4 +43,16 @@ export const getUser = async () => {
   }
 
   return session.user;
+};
+
+export const getUser = async () => {
+  const session = await auth();
+
+  if (!session?.user) {
+    throw new Error("Not logged in");
+  }
+
+  const user = await getUserById(session.user.userId);
+
+  return user;
 };

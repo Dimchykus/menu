@@ -8,9 +8,20 @@ import { Checkbox } from "@/components/ui/checkbox";
 import GitHubAuth from "@/components/sso/github";
 import Link from "next/link";
 import useFormAction from "@/lib/hooks/use-form-action";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const signupSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
 
 const SignupForm = () => {
-  const methods = useFormAction({ onAction: handleSignUp });
+  const methods = useFormAction({
+    onAction: handleSignUp,
+    resolver: zodResolver(signupSchema),
+  });
 
   return (
     <div>

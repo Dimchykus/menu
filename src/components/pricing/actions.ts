@@ -1,4 +1,4 @@
-import { getUser } from "@/lib/actions/auth";
+import { getSessionUser } from "@/lib/actions/auth";
 import { checkIfUserHasActiveSubscription } from "@/lib/db/actions/subscriptions";
 import { loadStripe } from "@stripe/stripe-js/pure";
 import { redirect } from "next/navigation";
@@ -12,7 +12,7 @@ export const handleCheckout = async (
   productName: string,
 ) => {
   try {
-    const user = await getUser();
+    const user = await getSessionUser();
 
     const userHasActiveSubscription = await checkIfUserHasActiveSubscription(
       user.userId,

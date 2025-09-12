@@ -38,13 +38,19 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
   callbacks: {
     jwt: async ({ token, user, trigger, session }) => {
       if (user) {
+        if (!user.id) {
+          throw new Error("User ID is required");
+        }
+
         token.user = user;
       }
 
-      if (trigger === "update") {
+      if (trigger === "update" && session) {
+        console.log("trigger", trigger, session);
         token.user = {
           ...token.user,
           name: session.user.name,
+          email: session.user.email,
         };
       }
 
@@ -52,6 +58,8 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
     },
     session: async ({ session, token }) => {
       session["user"]["userId"] = token.user.userId as number;
+      session["user"]["name"] = token.user.name as string;
+      session["user"]["email"] = token.user.email as string;
 
       return session;
     },

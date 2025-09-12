@@ -19,7 +19,7 @@ const MenuList = ({ menu, restaurantId, selectedMenu }: Props) => {
               className="basis-[200px] sm:basis-[300px]"
             >
               <Link
-                className={`block p-2 sm:p-6 rounded-xl border transition-all duration-200 ease-out cursor-pointer
+                className={`flex items-center h-full p-2 sm:p-6 rounded-xl border transition-all duration-200 ease-out cursor-pointer
                 ${
                   selectedMenu === item.id
                     ? "bg-primary/5 border-primary"

@@ -14,6 +14,7 @@ import Image from "next/image";
 import userSrc from "@/icons/user.jpeg";
 import { ChevronDown, LogOut, Menu } from "lucide-react";
 import { SidebarTrigger } from "../ui/sidebar";
+import { getUserById } from "@/lib/db/actions/user";
 
 interface HeaderProps {
   title?: string;
@@ -21,6 +22,12 @@ interface HeaderProps {
 
 const Header = async ({ title }: HeaderProps) => {
   const session = await auth();
+
+  if (!session || !session.user?.userId) {
+    return null;
+  }
+
+  const user = await getUserById(session?.user?.userId);
 
   return (
     <header className="flex items-center p-4 sm:p-6 bg-neutral-100 border-b border-neutral-300 text-neutral-950">
@@ -47,7 +54,7 @@ const Header = async ({ title }: HeaderProps) => {
                 alt="user"
                 className="rounded-[50%]"
               />
-              <p>{session?.user?.name}</p>
+              <p>{user?.name}</p>
               <ChevronDown />
             </DropdownMenuTrigger>
             <DropdownMenuContent>

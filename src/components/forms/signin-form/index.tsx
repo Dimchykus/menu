@@ -1,20 +1,31 @@
 "use client";
 
 import { handleSignIn } from "./actions";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import FormInput from "@/components/form-input";
 import GitHubAuth from "@/components/sso/github";
 import Link from "next/link";
+import useFormAction from "@/lib/hooks/use-form-action";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
 
 const SigninForm = () => {
-  const methods = useForm();
+  const methods = useFormAction({
+    onAction: handleSignIn,
+    resolver: zodResolver(loginSchema),
+  });
 
   return (
     <div>
       <FormProvider {...methods}>
         <div className="max-w-[380px] w-full p-8 bg-slate-800/90 backdrop-blur-xl border border-slate-700/50 rounded-3xl flex flex-col items-stretch shadow-2xl">
-          <form action={handleSignIn}>
+          <form action={methods.handleAction}>
             <div className="flex flex-col m-auto">
               <h2 className="text-3xl text-center mb-8 font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 Welcome Back
